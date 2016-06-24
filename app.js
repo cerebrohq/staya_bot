@@ -258,7 +258,7 @@ function changeWork(session, timeSearch)
 
             var strlist = '';
             // return befor commit (crash emulator)
-            /*for (var i = 0; i < profession_list.length; i++) {
+            for (var i = 0; i < profession_list.length; i++) {
                 if (profession_list[i].parent_id) {
                     strlist += '\t';
                 }
@@ -268,9 +268,9 @@ function changeWork(session, timeSearch)
             
             if (strlist != '') {
                 session.send(strlist + '\n' + prompts.select);
-            }*/
+            }
 
-            session.send('введите числа')
+            session.send(prompts.select)
             console.log('request end');             
         }
     });
