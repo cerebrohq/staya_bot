@@ -1,7 +1,25 @@
 var restify = require('restify');
 var builder = require('botbuilder');
-var prompts = require('./prompts');
+//var messages = require('./prompts');
 var request = require("request")
+
+var messages = {   
+    beginText: "Здравствуйте, %(user)s! Stay Bot - дружелюбный Бот, \
+    который найдет для вас самые интересные вакансии в системе Staya. \
+    Вам осталось только указать интересные для вас профессиональные области и время, когда посылать подборку вакансий!",
+    helloText: "Здравствуйте %(user)s. Хотите изменить рассылку?",    
+    helpMessage: "Я понимаю команды:\
+    **работа** - сменить интересные разделы вакансий;\n\n\
+    **время** - изменить время ежедневной рассылки;\n\n\
+    **старт** - начать ежедневную рассылку;\n\n\
+    **стоп** - отменить рассылку;\n\n\
+    **потом** - выйти из диалога;\n\n",
+    timeMessage: "Задайте время, во сколько вы хотите получать ежедневную рассылку, например 18:30",
+    goоdMessage: "Отлично, %(user)s, будем на связи, удачи ;)",    
+    select: "Укажите номера интересных разделов вакансий через пробел, например: 2 4",
+    cancel: "Добро, займемся позже.",
+    shutdownMessage: "Хорошо, умолкаю."
+};
 
 // userData
 /*{ 
@@ -21,7 +39,7 @@ dcommand.matches('^(работа|сменить работу)', builder.DialogAc
 dcommand.matches('^(время спама|время)', builder.DialogAction.beginDialog('/timer'))
 dcommand.matches('^старт|начать', builder.DialogAction.beginDialog('/start'))
 dcommand.matches('^стоп|прекратить', builder.DialogAction.beginDialog('/stop'))
-dcommand.matches('^(отменить|потом)', builder.DialogAction.endDialog(prompts.cancel)) // do not working!!!!
+dcommand.matches('^(отменить|потом)', builder.DialogAction.endDialog(messages.cancel)) // do not working!!!!
 
 dcommand.onBegin
 (
@@ -31,12 +49,12 @@ function (session, args, next) {
     userData.to = session.message.from;
     userData.from = session.message.to;
     if (!userData.user_professions) {   
-        session.send(session.gettext(prompts.beginText,  { user: session.message.from.name }) ); 
+        session.send(session.gettext(messages.beginText,  { user: session.message.from.name }) ); 
         session.beginDialog('/changew');
          
     } else {
-        session.send(session.gettext(prompts.helloText,  { user: session.message.from.name }) );  
-        session.send(prompts.helpMessage);  
+        session.send(session.gettext(messages.helloText,  { user: session.message.from.name }) );  
+        session.send(messages.helpMessage);  
     }    
 }
 );
@@ -49,10 +67,10 @@ function (session, args, next) {
     userData.to = session.message.from;
     userData.from = session.message.to;
      if (userData.user_professions) {
-        session.send(session.gettext(prompts.helloText,  { user: session.message.from.name }) );  
-        session.send(prompts.helpMessage);         
+        session.send(session.gettext(messages.helloText,  { user: session.message.from.name }) );  
+        session.send(messages.helpMessage);         
      } else {
-       session.send(prompts.helpMessage); 
+       session.send(messages.helpMessage); 
        next();
     }
 
@@ -68,9 +86,10 @@ bot.add('/', dcommand);
 
 bot.add('/changew',  [
     function (session) { 
-        console.log('changew 1');
-        builder.Prompts.text(session, 'минутку');   
-        changeWork(session);         
+         console.log('changew 1');
+         builder.Prompts.text(session, 'минутку');
+        //session.send('секундочку');
+        changeWork(session);                
     },
     function (session, results) {
         console.log('changew 2');
@@ -92,15 +111,21 @@ bot.add('/changew',  [
         }
 
         if (profIds.length > 0 && userData.time) {
-            session.send(session.gettext(prompts.goodMessage, { user: session.message.from.name }));            
-        }
+            session.send(session.gettext(messages.goodMessage, { user: session.message.from.name }));
+            session.endDialog(); 
+            
+            var timeDate = new Date();           
+            timeDate.setDate(timeDate.getDate() - 3);              
 
-        session.endDialog();            
+            sendWork(timeDate.getTime());  
+            console.log(userData.time);           
+        } else {
+            session.endDialog(); 
+        }                   
 
         if (!userData.time) {            
             session.beginDialog('/timer');               
-        }
-               
+        }         
 
         console.log(profIds);                
     }
@@ -108,7 +133,8 @@ bot.add('/changew',  [
  
 bot.add('/timer',  [
     function (session) {  
-        builder.Prompts.text(session, prompts.timeMessage);   
+        //session.sendMessage(messages.timeMessage);       
+        builder.Prompts.text(session, messages.timeMessage);   
     },
     function (session, results) { 
 
@@ -135,7 +161,7 @@ bot.add('/timer',  [
 
         console.log(userData.time); 
 
-        session.send(session.gettext(prompts.goоdMessage, { user: session.message.from.name }));
+        session.send(session.gettext(messages.goоdMessage, { user: session.message.from.name }));
 
         if (userData.time && userData.user_professions) {
             var timeDate = new Date();           
@@ -151,19 +177,26 @@ bot.add('/timer',  [
 
 bot.add('/start',  [
     function (session) {  
-        next();     
+        session.endDialog(); 
+        if (!userData.user_professions) {
+           session.beginDialog('/changew');
+        } else {
+            session.beginDialog('/timer');   
+        }        
     },
     function (session, results) {        
-        session.endDialog();       
+           
     }
 ]);
 
 bot.add('/stop',  [
     function (session) {  
-        next();     
+        userData.time = null; 
+        session.send(messages.shutdownMessage);
+        session.endDialog();     
     },
     function (session, results) {        
-        session.endDialog();       
+           
     }
 ]);
 
@@ -202,7 +235,7 @@ function sendWork(time)
     var url = 'https://jobs.staya.vc/api/jobs?limit=15&order_by=created_at&direction=desc&order_by=created_at&created_from=' + strtime + '&prof_areas=' + userData.user_professions.join(',');
 
     console.log('sendWork start');  
-    console.log(url);      
+    //console.log(url);      
     
     request({
         url: url,
@@ -258,7 +291,7 @@ function changeWork(session, timeSearch)
 
             var strlist = '';
             // return befor commit (crash emulator)
-            for (var i = 0; i < profession_list.length; i++) {
+           /*for (var i = 0; i < profession_list.length; i++) {
                 if (profession_list[i].parent_id) {
                     strlist += '\t';
                 }
@@ -267,10 +300,9 @@ function changeWork(session, timeSearch)
             }
             
             if (strlist != '') {
-                session.send(strlist + '\n' + prompts.select);
-            }
-
-            session.send(prompts.select)
+                session.send(strlist + '\n' + messages.select);
+            }*/
+            session.send(strlist + '\n' + messages.select);
             console.log('request end');             
         }
     });
