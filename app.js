@@ -4,18 +4,18 @@ var builder = require('botbuilder');
 var request = require("request")
 
 var messages = {   
-    beginText: "Здравствуйте, %(user)s! Stay Bot - дружелюбный Бот, \
+    beginText: "Здравствуйте! Stay Bot - дружелюбный Бот, \
     который найдет для вас самые интересные вакансии в системе Staya. \
     Вам осталось только указать интересные для вас профессиональные области и время, когда посылать подборку вакансий!",
-    helloText: "Здравствуйте %(user)s. Хотите изменить рассылку?",    
+    helloText: "Здравствуйте! Хотите изменить рассылку?",    
     helpMessage: "Я понимаю команды:\
-    **работа** - сменить интересные разделы вакансий;\n\n\
-    **время** - изменить время ежедневной рассылки;\n\n\
-    **старт** - начать ежедневную рассылку;\n\n\
-    **стоп** - отменить рассылку;\n\n\
-    **потом** - выйти из диалога;\n\n",
+    работа - сменить интересные разделы вакансий;\n\n\
+    время - изменить время ежедневной рассылки;\n\n\
+    старт - начать ежедневную рассылку;\n\n\
+    стоп - отменить рассылку;\n\n\
+    потом - выйти из диалога;\n\n",
     timeMessage: "Задайте время, во сколько вы хотите получать ежедневную рассылку, например 18:30",
-    goоdMessage: "Отлично, %(user)s, будем на связи, удачи ;)",    
+    goоdMessage: "Отлично, будем на связи, удачи ;)",    
     select: "Укажите номера интересных разделов вакансий через пробел, например: 2 4",
     cancel: "Добро, займемся позже.",
     shutdownMessage: "Хорошо, умолкаю."
@@ -49,11 +49,11 @@ function (session, args, next) {
     userData.to = session.message.from;
     userData.from = session.message.to;
     if (!userData.user_professions) {   
-        session.send(session.gettext(messages.beginText,  { user: session.message.from.name }) ); 
+        session.send(messages.beginText); 
         session.beginDialog('/changew');
          
     } else {
-        session.send(session.gettext(messages.helloText,  { user: session.message.from.name }) );  
+        session.send(messages.helloText);  
         session.send(messages.helpMessage);  
     }    
 }
@@ -161,7 +161,7 @@ bot.add('/timer',  [
 
         console.log(userData.time); 
 
-        session.send(session.gettext(messages.goоdMessage, { user: session.message.from.name }));
+        session.send(messages.goоdMessage);
 
         if (userData.time && userData.user_professions) {
             var timeDate = new Date();           
