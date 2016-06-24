@@ -291,7 +291,7 @@ function changeWork(session, timeSearch)
 
             var strlist = '';
             // return befor commit (crash emulator)
-           /*for (var i = 0; i < profession_list.length; i++) {
+           for (var i = 0; i < profession_list.length; i++) {
                 if (profession_list[i].parent_id) {
                     strlist += '\t';
                 }
@@ -300,9 +300,9 @@ function changeWork(session, timeSearch)
             }
             
             if (strlist != '') {
-                session.send(strlist + '\n' + messages.select);
-            }*/
-            session.send(strlist + '\n' + messages.select);
+                session.send(strlist + '\n\n' + messages.select);
+            }
+            //session.send(strlist + '\n' + messages.select);
             console.log('request end');             
         }
     });
