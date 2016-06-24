@@ -295,7 +295,8 @@ function changeWork(session, timeSearch)
                 if (profession_list[i].parent_id) {
                     strlist += '\t';
                 }
-                strlist += i + '. ' + profession_list[i].name; 
+                var num = i + 1;
+                strlist += num + '. ' + profession_list[i].name; 
                 strlist += '\n';                
             }
             
