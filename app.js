@@ -63,7 +63,7 @@ function (session, results) {
 ]);
 
 
-var bot = new builder.BotConnectorBot({ appId: 'YourAppId', appSecret: 'YourAppSecret' });
+var bot = new builder.BotConnectorBot({ appId: 'StayaBotCinesoft', appSecret: '2135b80f5c6b4c0ba24051fa1f1c0b33' });
 bot.add('/', dcommand);
 
 bot.add('/changew',  [
