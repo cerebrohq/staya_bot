@@ -112,7 +112,7 @@ bot.add('/changew',  [
         }
 
         if (profIds.length > 0 && userData.time) {
-            session.endDialog(messages.goodMessage); 
+            session.endDialog(messages.goоdMessage); 
             
             var timeDate = new Date();           
             timeDate.setDate(timeDate.getDate() - 3);              
@@ -120,7 +120,7 @@ bot.add('/changew',  [
             sendWork(timeDate.getTime());  
             console.log(userData.time);           
         } else {
-            session.endDialog(); 
+            session.endDialog(messages.goоdMessage); 
         }                   
 
         /*if (!userData.time) {            
