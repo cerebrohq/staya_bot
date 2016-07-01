@@ -3,14 +3,14 @@ var builder = require('botbuilder');
 //var messages = require('./prompts');
 var request = require("request")
 
+// время - изменить время ежедневной рассылки;\n\n\
 var messages = {   
     beginText: "Здравствуйте! Stay Bot - дружелюбный Бот, \
     который найдет для вас самые интересные вакансии в системе Staya. \
-    Вам осталось только указать интересные для вас профессиональные области и время, когда посылать подборку вакансий!",
+    Вам осталось только указать интересные для вас профессиональные области!", // и время, когда посылать подборку вакансий
     helloText: "Здравствуйте! Хотите изменить рассылку?",    
-    helpMessage: "Я понимаю команды:\n\n\
+    helpMessage: "Я понимаю команды: \n\n\
     работа - сменить интересные разделы вакансий;\n\n\
-    время - изменить время ежедневной рассылки;\n\n\
     старт - начать ежедневную рассылку;\n\n\
     стоп - прекратить рассылку;\n\n\
     потом - выйти из диалога.",
@@ -36,7 +36,7 @@ var profession_list = new Array();
 var dcommand = new builder.CommandDialog();
 
 dcommand.matches('^(работа|сменить работу)', builder.DialogAction.beginDialog('/changew'))
-dcommand.matches('^(время спама|время)', builder.DialogAction.beginDialog('/timer'))
+//dcommand.matches('^(время спама|время)', builder.DialogAction.beginDialog('/timer'))
 dcommand.matches('^старт|начать', builder.DialogAction.beginDialog('/start'))
 dcommand.matches('^стоп|прекратить', builder.DialogAction.beginDialog('/stop'))
 dcommand.matches('^(отменить|потом)', builder.DialogAction.endDialog(messages.cancel)) // do not working!!!!
@@ -108,6 +108,7 @@ bot.add('/changew',  [
 
         if (profIds.length > 0) {
             userData.user_professions = profIds;
+            userData.time = new Date().getTime(); 
         }
 
         if (profIds.length > 0 && userData.time) {
@@ -123,14 +124,17 @@ bot.add('/changew',  [
             session.endDialog(); 
         }                   
 
-        if (!userData.time) {            
-            session.beginDialog('/timer');               
-        }         
+        /*if (!userData.time) {            
+            //session.beginDialog('/timer');    
+            var timeDate = new Date();           
+            timeDate.setDate(timeDate.getDate() - 3);
+            sendWork(timeDate.getTime());           
+        }*/         
 
         console.log(profIds);                
     }
 ]);
- 
+/* 
 bot.add('/timer',  [
     function (session) {  
         //session.sendMessage(messages.timeMessage);       
@@ -174,14 +178,19 @@ bot.add('/timer',  [
         session.endDialog();        
     }
 ]);
-
+*/
 bot.add('/start',  [
     function (session) {  
         session.endDialog(); 
         if (!userData.user_professions) {
            session.beginDialog('/changew');
         } else {
-            session.beginDialog('/timer');   
+            //session.beginDialog('/timer');            
+            session.send(session.gettext(messages.goodMessage, { user: session.message.from.name }));
+            var timeDate = new Date();           
+            timeDate.setDate(timeDate.getDate() - 3);
+            sendWork(timeDate.getTime()); 
+            userData.time = new Date().getTime();             
         }        
     },
     function (session, results) {        
@@ -201,40 +210,52 @@ bot.add('/stop',  [
 ]);
 
 bot.add('/notify', function (session, vacancy) {
-   session.endDialog(vacancy); 
+   //session.endDialog(vacancy); 
+
+   for (var i = 0; i < vacancy.length; i++) {  //
+                //var strlist = '';
+                var strlist = '###' + vacancy[i].topic + '\n\n';              
+                strlist += vacancy[i].description_short;
+                strlist += '\n\n';
+                strlist += vacancy[i].url; 
+                session.send(strlist);                   
+                //console.log('vacancy', strlist);        
+            }   
+   session.endDialog(); 
 });
 
-setInterval(function() {
+setInterval(function() {                
+
                 if (userData.time && userData.user_professions) {
-                    var now = new Date().getTime();
-                    if (now >= userData.time) {
-                        sendWork(userData.time);
-                        userData.time = now; 
-                    }
+                    var sendtime = userData.time;                    
+                    //console.log('current time', now, 'time send', userData.time, 'profs', userData.user_professions);
+                    //if (now >= userData.time) {
+                    sendWork(sendtime);
+                    userData.time = new Date().getTime();
+                    //userData.time = now; 
+                    //}
                 }
-        }, 20000);   
+        }, 300000);   
 
 function sendWork(time)
 {
     //var timeSearch = new Date();
     //var created_from = timeSearch.setDate(timeSearch.getDate() - 1);
 
-    var now = new Date().getTime();    
-    
     console.log(time);
     var timeDate = new Date();
-    timeDate.setTime(time);
-    timeDate.setDate(timeDate.getDate() - 1);
+    timeDate.setTime(time - 5);
     var utcDate = new Date(Date.UTC(timeDate.getFullYear(), timeDate.getMonth(), timeDate.getDate(), timeDate.getHours(), timeDate.getMinutes(), timeDate.getSeconds()));        
     
     var strtime = utcDate.toISOString();
     strtime = strtime.replace('T', '%20');
+    strtime = strtime.replace(' ', '%20');
     strtime = strtime.slice(0, -5);
 
     console.log(strtime); 
     var url = 'https://jobs.staya.vc/api/jobs?limit=15&order_by=created_at&direction=desc&order_by=created_at&created_from=' + strtime + '&prof_areas=' + userData.user_professions.join(',');
 
-    console.log('sendWork start');  
+    console.log('sendWork start', timeDate);  
     //console.log(url);      
     
     request({
@@ -246,9 +267,9 @@ function sendWork(time)
         if (!error && response.statusCode === 200) {
             var vacancy = body.list;
             
-            var strlist = '';
+            //var strlist = '';
             // return befor commit (crash emulator)
-            for (var i = 0; i < vacancy.length; i++) {  //
+            /*for (var i = 0; i < vacancy.length; i++) {  //
                 //var strlist = '';
                 strlist += '###' + vacancy[i].topic + '\n\n';              
                 strlist += vacancy[i].description_short; 
@@ -258,8 +279,13 @@ function sendWork(time)
             }     
             
             if (strlist != '') {
-                bot.beginDialog({ from: userData.from, to: userData.to }, '/notify', strlist);
-            }
+                bot.beginDialog({ from: userData.from, to: userData.to }, '/notify', , strlist);
+            }*/
+
+            //console.log('vacancy', vacancy.length);   
+            if (vacancy && vacancy.length) {
+                bot.beginDialog({ from: userData.from, to: userData.to }, '/notify', vacancy);
+            }            
 
             //console.log(strlist);            
             console.log('sendWork end');             
