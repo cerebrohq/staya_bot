@@ -181,12 +181,14 @@ bot.add('/timer',  [
 */
 bot.add('/start',  [
     function (session) {  
-        session.endDialog(); 
+        
         if (!userData.user_professions) {
+            session.endDialog(); 
            session.beginDialog('/changew');
         } else {
             //session.beginDialog('/timer');            
             session.send(session.gettext(messages.goodMessage, { user: session.message.from.name }));
+            session.endDialog(); 
             var timeDate = new Date();           
             timeDate.setDate(timeDate.getDate() - 3);
             sendWork(timeDate.getTime()); 
@@ -227,11 +229,11 @@ bot.add('/notify', function (session, vacancy) {
 setInterval(function() {                
 
                 if (userData.time && userData.user_professions) {
-                    var sendtime = userData.time;                    
+                    var sendtime = userData.time; 
+                    userData.time = new Date().getTime();                   
                     //console.log('current time', now, 'time send', userData.time, 'profs', userData.user_professions);
                     //if (now >= userData.time) {
-                    sendWork(sendtime);
-                    userData.time = new Date().getTime();
+                    sendWork(sendtime);                    
                     //userData.time = now; 
                     //}
                 }
