@@ -67,7 +67,7 @@ function (session, args, next) {
     userData.to = session.message.from;
     userData.from = session.message.to;
      if (userData.user_professions) {
-        session.send(session.gettext(messages.helloText,  { user: session.message.from.name }) );  
+        session.send(messages.helloText);//session.gettext(messages.helloText,  { user: session.message.from.name }) );  
         session.send(messages.helpMessage);         
      } else {
        session.send(messages.helpMessage); 
@@ -112,7 +112,7 @@ bot.add('/changew',  [
         }
 
         if (profIds.length > 0 && userData.time) {
-            session.send(session.gettext(messages.goodMessage, { user: session.message.from.name }));
+            session.send(messages.goodMessage);//session.gettext(messages.goodMessage, { user: session.message.from.name }));
             session.endDialog(); 
             
             var timeDate = new Date();           
@@ -187,12 +187,12 @@ bot.add('/start',  [
            session.beginDialog('/changew');
         } else {
             //session.beginDialog('/timer');            
-            session.send(session.gettext(messages.goodMessage, { user: session.message.from.name }));
+            session.send(messages.goоdMessage);//session.gettext(messages.goodMessage, { user: session.message.from.name }));
             session.endDialog(); 
+            userData.time = new Date().getTime();
             var timeDate = new Date();           
             timeDate.setDate(timeDate.getDate() - 3);
-            sendWork(timeDate.getTime()); 
-            userData.time = new Date().getTime();             
+            sendWork(timeDate.getTime());                          
         }        
     },
     function (session, results) {        
