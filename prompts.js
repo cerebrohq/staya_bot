@@ -1,5 +1,5 @@
 //module.exports 
-
+/*
 messages = {   
     beginText: "Здравствуйте, %(user)s! Stay Bot - дружелюбный Бот, \
     который найдет для вас самые интересные вакансии в системе Staya. \
@@ -12,3 +12,4 @@ messages = {
     cancel: "Добро, займемся позже.",
     shutdownMessage: "Хорошо, умолкаю."
 };
+*/
