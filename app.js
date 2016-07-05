@@ -223,9 +223,9 @@ bot.add('/notify', function (session, vacancy) {
             session.send(strlist);                   
             //console.log('vacancy', strlist);        
         } 
-   }/* else {
+   } else {
        session.send('Новостей нет.'); 
-   }*/
+   }
 
    session.endDialog(); 
 });
