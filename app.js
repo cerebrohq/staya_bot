@@ -16,6 +16,7 @@ var messages = {
     потом - выйти из диалога.",
     timeMessage: "Задайте время, во сколько вы хотите получать ежедневную рассылку, например 18:30",
     goоdMessage: "Отлично, будем на связи, удачи ;)",    
+    badMessage: "Что-то пошло не так, давайте по новой!",  
     select: "Укажите номера интересных разделов вакансий через пробел, например: 2 4",
     cancel: "Добро, займемся позже.",
     shutdownMessage: "Хорошо, умолкаю."
@@ -120,7 +121,7 @@ bot.add('/changew',  [
             sendWork(timeDate.getTime());  
             console.log(userData.time);           
         } else {
-            session.endDialog(messages.goоdMessage); 
+            session.endDialog(messages.badMessage); 
         }                   
 
         /*if (!userData.time) {            
@@ -212,15 +213,20 @@ bot.add('/stop',  [
 bot.add('/notify', function (session, vacancy) {
    //session.endDialog(vacancy); 
 
-   for (var i = 0; i < vacancy.length; i++) {  //
-                //var strlist = '';
-                var strlist = '###' + vacancy[i].topic + '\n\n';              
-                strlist += vacancy[i].description_short;
-                strlist += '\n\n';
-                strlist += vacancy[i].url; 
-                session.send(strlist);                   
-                //console.log('vacancy', strlist);        
-            }   
+   if (vacancy && vacancy.length) {
+        for (var i = 0; i < vacancy.length; i++) {  //
+            //var strlist = '';
+            var strlist = '###' + vacancy[i].topic + '\n\n';              
+            strlist += vacancy[i].description_short;
+            strlist += '\n\n';
+            strlist += vacancy[i].url; 
+            session.send(strlist);                   
+            //console.log('vacancy', strlist);        
+        } 
+   }/* else {
+       session.send('Новостей нет.'); 
+   }*/
+
    session.endDialog(); 
 });
 
@@ -283,9 +289,9 @@ function sendWork(time)
             }*/
 
             //console.log('vacancy', vacancy.length);   
-            if (vacancy && vacancy.length) {
+            //if (vacancy && vacancy.length) {
                 bot.beginDialog({ from: userData.from, to: userData.to }, '/notify', vacancy);
-            }            
+            //}            
 
             //console.log(strlist);            
             console.log('sendWork end');             
