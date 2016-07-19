@@ -152,7 +152,7 @@ bot.dialog('/stop',  [
     }
 ]);
 
-bot.dialog('/restart',  [
+bot.dialog('/restartNew',  [
     function (session) {  
         data.user.resource = null; 
         data.user.user_professions = null;
