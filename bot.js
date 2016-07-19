@@ -145,7 +145,19 @@ bot.dialog('/stop',  [
     function (session) {  
         data.user.time = null; 
         session.send(messages.shutdownMessage);
-        session.endDialog();     
+        session.endDialog();          
+    },
+    function (session, results) {        
+           
+    }
+]);
+
+bot.dialog('/restart',  [
+    function (session) {  
+        data.user.resource = null; 
+        data.user.user_professions = null;
+        session.endDialog(messages.beginText); 
+        session.beginDialog('/');    
     },
     function (session, results) {        
            
