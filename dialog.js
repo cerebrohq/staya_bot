@@ -17,7 +17,7 @@ dcommand.onBegin
 (
 function (session, args, next) {
     
-    console.log('begin 1'); 
+    console.log('begin 1', process.env.MICROSOFT_APP_ID); 
     data.user.address = session.message.address;     
     if (!data.user.area) {
         session.send(messages.beginText); 
@@ -36,7 +36,7 @@ dcommand.onDefault
 ([
 function (session, args, next) {
     
-    console.log('default 1');   
+    console.log('default 1', process.env.MICROSOFT_APP_ID);   
     data.user.address = session.message.address;  
     
      if (data.user.user_professions && data.user.area) {
