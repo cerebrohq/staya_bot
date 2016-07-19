@@ -1,5 +1,5 @@
 {
-  "name": "staya_bot",
+  "name": "xxxtest_bot",
   "version": "1.0.0",
   "description": "staya bot",
   "main": "app.js",
@@ -9,8 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "botbuilder": "^1.0.1",
-    "request": "^2.72.0",
-    "restify": "^4.1.1"
+    "botbuilder": "",
+    "request": "",
+    "restify": ""
   }
 }
