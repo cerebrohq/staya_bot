@@ -157,7 +157,7 @@ bot.dialog('/restartNew',  [
     function (session) {  
         data.user.resource = null; 
         data.user.user_professions = null;
-        session.endDialog(messages.beginText); 
+        session.endDialog(); 
         session.beginDialog('/');    
     },
     function (session, results) {        
