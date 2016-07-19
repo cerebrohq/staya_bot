@@ -82,7 +82,7 @@ bot.dialog('/changer',  [
 bot.dialog('/changerResult', [
     function (session, resources) { 
          console.log('changerResult 1');
-         builder.Prompts.choice(session, messages.selectResource, resources, {listStyle: builder.ListStyle["inline"]});            
+         builder.Prompts.choice(session, messages.selectResource, resources, {listStyle: builder.ListStyle["list"]});            
     },
     function (session, results) {
         console.log('changerResult 2');
