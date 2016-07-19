@@ -1,12 +1,12 @@
 {
-  "name": "xxxtest_bot",
+  "name": "staya_bot",
   "version": "1.0.0",
   "description": "staya bot",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Cinesoft",
   "license": "ISC",
   "dependencies": {
     "botbuilder": "",
