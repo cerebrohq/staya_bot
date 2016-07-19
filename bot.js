@@ -6,11 +6,12 @@ var query = require('./func');
 
 
 var connector = new builder.ChatConnector({
-    appId: 'StayaBotCinesoft',
-    appPassword: '2135b80f5c6b4c0ba24051fa1f1c0b33'
+    appId: process.env.MICROSOFT_APP_ID,
+    appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 
-var bot = new builder.UniversalBot(connector); //{ appId: 'xxxtestbot', appSecret: 'a32e7ce9d1b440a5a9f3af39361764af' }
+
+var bot = new builder.UniversalBot(connector); 
 bot.dialog('/', dcommand);
 
 module.exports.connector = connector;
