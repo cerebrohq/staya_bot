@@ -11,7 +11,7 @@ dcommand.matches('^(ресурс|сменить ресурс)', builder.DialogAc
 dcommand.matches('^(работа|сменить работу)', builder.DialogAction.beginDialog('/changew'));
 dcommand.matches('^старт|начать', builder.DialogAction.beginDialog('/start'));
 dcommand.matches('^стоп|прекратить', builder.DialogAction.beginDialog('/stop'));
-dcommand.matches('^(миша|заново)', builder.DialogAction.endDialog('/restartNew'));
+dcommand.matches('^(миша|заново)', builder.DialogAction.beginDialog('/restartNew'));
 dcommand.matches('^(отменить|потом)', builder.DialogAction.endDialog(messages.cancel)); 
 
 
