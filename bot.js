@@ -19,6 +19,7 @@ module.exports.connector = connector;
 bot.dialog('/changew',  [
     function (session) { 
          console.log('changew 1');
+          builder.Prompts.text(session, 'минутку'); 
          query.changeWork(session); 
          session.endDialog();                      
     }
@@ -81,7 +82,7 @@ bot.dialog('/changer',  [
 bot.dialog('/changerResult', [
     function (session, resources) { 
          console.log('changerResult 1');
-         builder.Prompts.choice(session, messages.selectResource, resources, {listStyle: builder.ListStyle["list"]});            
+         builder.Prompts.choice(session, messages.selectResource, resources, {listStyle: builder.ListStyle["inline"]});            
     },
     function (session, results) {
         console.log('changerResult 2');
