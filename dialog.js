@@ -45,13 +45,14 @@ function (session, args, next) {
         session.send(messages.helloText);
         session.send(messages.helpMessage);         
      } else {
-       session.send(messages.helpMessage); 
-       next();
+       session.send(messages.beginText); 
+       session.beginDialog('/changew'); 
+       //next();
     }
     
-},
+}/*,
 function (session, results) {   
     console.log('default 2');      
-}
+}*/
 ]);
 
