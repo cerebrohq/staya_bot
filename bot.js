@@ -58,7 +58,7 @@ bot.dialog('/changewResult',  [
                 var timeDate = new Date();           
                 timeDate.setDate(timeDate.getDate() - 3);              
 
-                query.sendWork(timeDate.getTime(), bot, data.user.area, data.user.user_professions, data.user.address);  
+                query.sendWork(timeDate.getTime(), bot, data.user.user_professions, data.user.address);  
                 console.log(data.user.time);
             /*} else {
                  session.endDialog();
@@ -111,7 +111,7 @@ bot.dialog('/changerResult', [
                 var timeDate = new Date();           
                 timeDate.setDate(timeDate.getDate() - 3);              
 
-                query.sendWork(timeDate.getTime(), bot, data.user.area, data.user.user_professions, data.user.address);                
+                query.sendWork(timeDate.getTime(), bot, data.user.user_professions, data.user.address);                
             } else {
                 session.endDialog(); 
                 session.beginDialog('/changew');    
@@ -134,7 +134,7 @@ bot.dialog('/start',  [
             data.user.time = new Date().getTime();
             var timeDate = new Date();           
             timeDate.setDate(timeDate.getDate() - 3);
-            query.sendWork(timeDate.getTime(), bot, data.user.area, data.user.user_professions, data.user.address);                          
+            query.sendWork(timeDate.getTime(), bot, data.user.user_professions, data.user.address);                          
         }        
     },
     function (session, results) {        
