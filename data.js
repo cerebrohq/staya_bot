@@ -1,7 +1,7 @@
 
 var userData = {
     user_professions : null
-,   resources: null
+,   area: null
 ,   address: null
 ,   time: null
 };

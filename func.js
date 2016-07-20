@@ -74,7 +74,7 @@ function changeResource(session)
 };
 
 
-function sendWork(time, bot, resource, profs, address)
+function sendWork(time, bot, profs, address) //, resource
 {    
     console.log(time);
     var timeDate = new Date();
@@ -87,7 +87,7 @@ function sendWork(time, bot, resource, profs, address)
     strtime = strtime.slice(0, -5);
 
     console.log(strtime); 
-    var url =  'http://' + resource + '/api/jobs?limit=15&order_by=created_at&direction=desc&order_by=created_at&created_from=' + strtime + '&prof_areas=' + profs.join(',');
+    var url =  /*'http://' + resource + */'http://jobs.staya.vc/api/jobs?limit=15&order_by=created_at&direction=desc&order_by=created_at&created_from=' + strtime + '&prof_areas=' + profs.join(',');
 
     console.log('sendWork start', timeDate);  
     console.log('sendWork start', url);  

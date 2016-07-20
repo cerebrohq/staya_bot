@@ -7,7 +7,7 @@ var dcommand = new builder.CommandDialog();
 
 module.exports = dcommand;
 
-dcommand.matches('^(ресурс|сменить ресурс)', builder.DialogAction.beginDialog('/changer'));
+//dcommand.matches('^(ресурс|сменить ресурс)', builder.DialogAction.beginDialog('/changer'));
 dcommand.matches('^(работа|сменить работу)', builder.DialogAction.beginDialog('/changew'));
 dcommand.matches('^старт|начать', builder.DialogAction.beginDialog('/start'));
 dcommand.matches('^стоп|прекратить', builder.DialogAction.beginDialog('/stop'));
@@ -19,12 +19,12 @@ dcommand.onBegin
 (
 function (session, args, next) {
     
-    console.log('begin 1', process.env.MICROSOFT_APP_ID); 
+    console.log('begin 1'); 
     data.user.address = session.message.address;     
-    if (!data.user.area) {
+    /*if (!data.user.area) {
         session.send(messages.beginText); 
         session.beginDialog('/changer');
-    } else if (!data.user.user_professions) {   
+    } else*/ if (!data.user.user_professions) {   
         session.send(messages.beginText); 
         session.beginDialog('/changew');         
     } else {
@@ -38,10 +38,10 @@ dcommand.onDefault
 ([
 function (session, args, next) {
     
-    console.log('default 1', process.env.MICROSOFT_APP_ID);   
+    console.log('default 1');   
     data.user.address = session.message.address;  
     
-     if (data.user.user_professions && data.user.area) {
+     if (data.user.user_professions) { // && data.user.area
         session.send(messages.helloText);
         session.send(messages.helpMessage);         
      } else {

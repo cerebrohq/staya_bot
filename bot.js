@@ -52,7 +52,7 @@ bot.dialog('/changewResult',  [
 
         if (profIds.length > 0 && data.user.time) {
              //console.log('data user', data.user);
-            if (data.user.area) {
+            //if (data.user.area) {
                 session.endDialog(messages.goоdMessage); 
                 
                 var timeDate = new Date();           
@@ -60,10 +60,10 @@ bot.dialog('/changewResult',  [
 
                 query.sendWork(timeDate.getTime(), bot, data.user.area, data.user.user_professions, data.user.address);  
                 console.log(data.user.time);
-            } else {
+            /*} else {
                  session.endDialog();
                  session.beginDialog('/changer');    
-            }     
+            } */    
         } else {
             session.endDialog(messages.badMessage); 
         }        
@@ -155,7 +155,7 @@ bot.dialog('/stop',  [
 
 bot.dialog('/restartNew',  [
     function (session) {  
-        data.user.resource = null; 
+        //data.user.area = null; 
         data.user.user_professions = null;
         session.endDialog(); 
         session.beginDialog('/');    
@@ -170,9 +170,9 @@ setInterval(function() {
                 if (data.user.time && data.user.user_professions) {
                     var sendtime = data.user.time; 
                     data.user.time = new Date().getTime();
-                    query.sendWork(sendtime, bot, data.user.area, data.user.user_professions, data.user.address); 
+                    query.sendWork(sendtime, bot, data.user.user_professions, data.user.address); //, data.user.area
                 }
-        }, 300000);   
+        }, 900000);   
 
 
 
