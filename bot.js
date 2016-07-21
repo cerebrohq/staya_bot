@@ -167,12 +167,9 @@ bot.dialog('/restartNew',  [
 
 bot.dialog('/test',  [
     function (session) {  
-        session.send('test time ' + data.user.time + 'profs ' + data.user.user_professions.join(',') + 'address ' + data.user.address);
+        session.send('test time ' + data.user.time + 'profs ' + data.user.user_professions.join(',') + 'address ' + data.user.address.);
         session.endDialog();          
-    },
-    function (session, results) {        
-           
-    }
+    }   
 ]);
 
 setInterval(function() {                

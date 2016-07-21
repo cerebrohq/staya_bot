@@ -13,6 +13,7 @@ dcommand.matches('^старт|начать', builder.DialogAction.beginDialog('/
 dcommand.matches('^стоп|прекратить', builder.DialogAction.beginDialog('/stop'));
 dcommand.matches('^(миша|заново)', builder.DialogAction.beginDialog('/restartNew'));
 dcommand.matches('^(отменить|потом)', builder.DialogAction.endDialog(messages.cancel)); 
+dcommand.matches('test', builder.DialogAction.beginDialog('/test')); 
 
 
 dcommand.onBegin
