@@ -56,7 +56,7 @@ bot.dialog('/changewResult',  [
                 session.endDialog(messages.goоdMessage); 
                 
                 var timeDate = new Date();           
-                timeDate.setDate(timeDate.getDate() - 3);              
+                timeDate.setDate(timeDate.getDate() - 3);
 
                 query.sendWork(timeDate.getTime(), bot, data.user.user_professions, data.user.address);  
                 console.log(data.user.time);
@@ -159,6 +159,16 @@ bot.dialog('/restartNew',  [
         data.user.user_professions = null;
         session.endDialog(); 
         session.beginDialog('/');    
+    },
+    function (session, results) {        
+           
+    }
+]);
+
+bot.dialog('/test',  [
+    function (session) {  
+        session.send('test time ' + data.user.time + 'profs ' + data.user.user_professions.join(',') + 'address ' + data.user.address);
+        session.endDialog();          
     },
     function (session, results) {        
            
