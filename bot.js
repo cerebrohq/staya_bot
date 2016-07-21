@@ -166,12 +166,12 @@ bot.dialog('/restartNew',  [
 ]);
 
 bot.dialog('/test',  [
-    function (session) {  
-        builder.Prompts.text('test time ' + data.user.time + 'profs ' + data.user.user_professions.join(',') + 'address '); // + data.user.address.
-        session.endDialog();          
+    function (session) { 
+        console.log('test 1', data.user.address); 
+        session.endDialog('time ' + data.user.time + ' profs ' + data.user.user_professions.join(',') + ' address ' + data.user.address.user.id);          
     },
     function (session, results) {        
-           
+        console.log('test 2');    
     }   
 ]);
 

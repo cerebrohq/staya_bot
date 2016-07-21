@@ -111,7 +111,11 @@ function sendWork(time, bot, profs, address) //, resource
                             .address(address)
                             .text(strlist);
                 bot.send(msg); 
-            }                    
+            }
+            var msg = new builder.Message()
+                            .address(address)
+                            .text('time ' + data.user.time + ' profs ' + data.user.user_professions.join(',') + ' address ' + data.user.address.user.id); 
+                               
             console.log('sendWork end');             
         }
     });
