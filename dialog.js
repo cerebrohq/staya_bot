@@ -8,12 +8,13 @@ var dcommand = new builder.CommandDialog();
 module.exports = dcommand;
 
 //dcommand.matches('^(ресурс|сменить ресурс)', builder.DialogAction.beginDialog('/changer'));
+dcommand.matches('test', builder.DialogAction.beginDialog('/test')); 
 dcommand.matches('^(работа|сменить работу)', builder.DialogAction.beginDialog('/changew'));
 dcommand.matches('^старт|начать', builder.DialogAction.beginDialog('/start'));
 dcommand.matches('^стоп|прекратить', builder.DialogAction.beginDialog('/stop'));
 dcommand.matches('^(миша|заново)', builder.DialogAction.beginDialog('/restartNew'));
 dcommand.matches('^(отменить|потом)', builder.DialogAction.endDialog(messages.cancel)); 
-dcommand.matches('test', builder.DialogAction.beginDialog('/test')); 
+
 
 
 dcommand.onBegin
