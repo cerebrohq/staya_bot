@@ -44,37 +44,7 @@ function changeWork(session)
 };
 
 
-
-function changeResource(session)
-{   
-   var url = "http://jobs.staya.vc/api/all_places"
-
-    request({
-        url: url,
-        json: true
-        }
-        , function (error, response, body) {
-
-        if (!error && response.statusCode === 200) {            
-            session.userData.resource_list = body;
-            var resources = [];
-           
-           for (var i = 0; i < session.userData.resource_list.length; i++) {
-                resources[i] = session.userData.resource_list[i].name;
-           }                           
-           
-            if (resources) {
-                session.beginDialog('/changerResult', resources);               
-            }            
-            console.log('request end');             
-        }
-    });
-   
-    console.log('changeResource end');
-};
-
-
-function sendWork(time, bot, profs, address) //, resource
+function sendWork(time, bot, user)
 {    
     console.log(time);
     var timeDate = new Date();
@@ -87,7 +57,7 @@ function sendWork(time, bot, profs, address) //, resource
     strtime = strtime.slice(0, -5);
 
     console.log(strtime); 
-    var url =  /*'http://' + resource + */'http://jobs.staya.vc/api/jobs?limit=15&order_by=created_at&direction=desc&order_by=created_at&created_from=' + strtime + '&prof_areas=' + profs.join(',');
+    var url =  'http://jobs.staya.vc/api/jobs?limit=15&order_by=created_at&direction=desc&order_by=created_at&created_from=' + strtime + '&prof_areas=' + user.profs.join(',');
 
     console.log('sendWork start', timeDate);  
     console.log('sendWork start', url);  
@@ -108,14 +78,10 @@ function sendWork(time, bot, profs, address) //, resource
                 strlist += '\n\n';
                 strlist += vacancy[i].url; 
                 var msg = new builder.Message()
-                            .address(address)
+                            .address(user.address)
                             .text(strlist);
                 bot.send(msg); 
-            }
-            var msg = new builder.Message()
-                            .address(address)
-                            .text('time ' + data.user.time + ' profs ' + data.user.user_professions.join(',') + ' address ' + data.user.address.user.id); 
-                               
+            }                              
             console.log('sendWork end');             
         }
     });
@@ -124,5 +90,4 @@ function sendWork(time, bot, profs, address) //, resource
 
 
 module.exports.changeWork = changeWork;
-module.exports.changeResource = changeResource;
 module.exports.sendWork = sendWork;

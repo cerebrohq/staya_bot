@@ -22,11 +22,8 @@ dcommand.onBegin
 function (session, args, next) {
     
     console.log('begin 1'); 
-    data.user.address = session.message.address;     
-    /*if (!data.user.area) {
-        session.send(messages.beginText); 
-        session.beginDialog('/changer');
-    } else*/ if (!data.user.user_professions) {   
+    data.addUser(session.message);     
+    if (!data.user(session.message).profs) {   
         session.send(messages.beginText); 
         session.beginDialog('/changew');         
     } else {
@@ -41,20 +38,14 @@ dcommand.onDefault
 function (session, args, next) {
     
     console.log('default 1');   
-    data.user.address = session.message.address;  
-    
-     if (data.user.user_professions) { // && data.user.area
+    data.addUser(session.message);
+    if (data.user(session.message).profs) {
         session.send(messages.helloText);
         session.send(messages.helpMessage);         
-     } else {
-       session.send(messages.beginText); 
-       session.beginDialog('/changew'); 
-       //next();
-    }
-    
-}/*,
-function (session, results) {   
-    console.log('default 2');      
-}*/
+    } else {
+        session.send(messages.beginText); 
+        session.beginDialog('/changew');      
+    }    
+}
 ]);
 

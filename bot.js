@@ -19,7 +19,7 @@ module.exports.connector = connector;
 bot.dialog('/changew',  [
     function (session) { 
          console.log('changew 1');
-          builder.Prompts.text(session, 'минутку'); 
+         builder.Prompts.text(session, 'минутку'); 
          query.changeWork(session); 
          session.endDialog();                      
     }
@@ -46,95 +46,33 @@ bot.dialog('/changewResult',  [
         }  
 
         if (profIds.length > 0) {
-            data.user.user_professions = profIds;
-            data.user.time = new Date().getTime(); 
+            data.setProfs(session.message, profIds);            
         }
 
-        if (profIds.length > 0 && data.user.time) {
-             //console.log('data user', data.user);
-            //if (data.user.area) {
-                session.endDialog(messages.goоdMessage); 
-                
-                var timeDate = new Date();           
-                timeDate.setDate(timeDate.getDate() - 3);
-
-                query.sendWork(timeDate.getTime(), bot, data.user.user_professions, data.user.address);  
-                console.log(data.user.time);
-            /*} else {
-                 session.endDialog();
-                 session.beginDialog('/changer');    
-            } */    
+        if (profIds.length > 0) {
+            session.endDialog(messages.goоdMessage);                
+            var timeDate = new Date();           
+            data.setTimeSend(session.message, timeDate.getTime());                
+            timeDate.setDate(timeDate.getDate() - 3);
+            query.sendWork(timeDate.getTime(), bot, data.user(session.message));
         } else {
             session.endDialog(messages.badMessage); 
         }        
     }
 ]);
 
-bot.dialog('/changer',  [
-    function (session) { 
-         console.log('changer 1'); 
-         query.changeResource(session); 
-         session.endDialog();           
-    }
-]);
-
-
-bot.dialog('/changerResult', [
-    function (session, resources) { 
-         console.log('changerResult 1');
-         builder.Prompts.choice(session, messages.selectResource, resources, {listStyle: builder.ListStyle["list"]});            
-    },
-    function (session, results) {
-        console.log('changerResult 2');
-
-        if (results.response && session.userData.resource_list)
-        {
-            var resourceName = results.response.entity;   
-            var resouce = '';                
-            for (var i = 0; i < session.userData.resource_list.length; i++) {               
-                if (resourceName == session.userData.resource_list[i].name) {
-                    resouce = session.userData.resource_list[i].server;  
-                    break;
-                }                       
-            }                      
-        }  
-        
-        if (resouce) {
-            data.user.area = resouce;
-            data.user.time = new Date().getTime(); 
-        }
-
-        if (resouce != '') { 
-            //console.log('data user', data.user);          
-            if (data.user.user_professions) {                
-                session.endDialog(messages.goоdMessage); 
-                var timeDate = new Date();           
-                timeDate.setDate(timeDate.getDate() - 3);              
-
-                query.sendWork(timeDate.getTime(), bot, data.user.user_professions, data.user.address);                
-            } else {
-                session.endDialog(); 
-                session.beginDialog('/changew');    
-            }           
-        } else {            
-            session.endDialog(messages.badMessage); 
-        }                
-    }    
-]);
-
 bot.dialog('/start',  [
     function (session) {  
         
-        if (!data.user.user_professions) {
+        if (!data.user(session.message).profs) {
             session.endDialog(); 
-           session.beginDialog('/changew');
+            session.beginDialog('/changew');
         } else {
-            //session.beginDialog('/timer');            
             session.endDialog(messages.goоdMessage); 
-            data.user.time = new Date().getTime();
             var timeDate = new Date();           
+            data.setTimeSend(session.message, timeDate.getTime());                
             timeDate.setDate(timeDate.getDate() - 3);
-            query.sendWork(timeDate.getTime(), bot, data.user.user_professions, data.user.address);                          
+            query.sendWork(timeDate.getTime(), bot, data.user(session.message));                          
         }        
     },
     function (session, results) {        
@@ -144,7 +82,7 @@ bot.dialog('/start',  [
 
 bot.dialog('/stop',  [
     function (session) {  
-        data.user.time = null; 
+        data.setTimeSend(session.message, null);  
         session.send(messages.shutdownMessage);
         session.endDialog();          
     },
@@ -155,8 +93,7 @@ bot.dialog('/stop',  [
 
 bot.dialog('/restartNew',  [
     function (session) {  
-        //data.user.area = null; 
-        data.user.user_professions = null;
+        data.removeUser(session.message)
         session.endDialog(); 
         session.beginDialog('/');    
     },
@@ -167,22 +104,30 @@ bot.dialog('/restartNew',  [
 
 bot.dialog('/test',  [
     function (session) { 
-        console.log('test 1', data.user.address); 
-        session.endDialog('time ' + data.user.time + ' profs ' + data.user.user_professions.join(',') + ' address ' + data.user.address.user.id);          
+        console.log('test 1'); 
+        var user = data.user(session.message);
+        session.endDialog('time ' + user.time + ' profs ' + user.profs.join(',') + ' address ' + user.address.id);          
     },
     function (session, results) {        
         console.log('test 2');    
     }   
 ]);
 
-setInterval(function() {                
-
-                if (data.user.time && data.user.user_professions) {
-                    var sendtime = data.user.time; 
-                    data.user.time = new Date().getTime();
-                    query.sendWork(sendtime, bot, data.user.user_professions, data.user.address); //, data.user.area
+setInterval(function() {
+                users = data.users();                
+                for (var id in users) {
+                    var user = users[id];
+                    if (user && user.time && user.profs) {
+                        var newtime = new Date().getTime();
+                        if ((newtime - user.time) >= 300000) {
+                            var sendtime = user.time; 
+                            users[id].time = newtime;
+                            query.sendWork(sendtime, bot, user);
+                        }
+                    }   
                 }
-        }, 900000);   
+                
+        }, 300000);   
 
 
 
