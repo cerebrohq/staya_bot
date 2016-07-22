@@ -106,7 +106,7 @@ bot.dialog('/test',  [
     function (session) { 
         console.log('test 1'); 
         var user = data.user(session.message);
-        session.endDialog('time ' + user.time + ' profs ' + user.profs.join(',') + ' address ' + user.address.id);          
+        session.endDialog('time ' + user.time + ' profs ' + user.profs.join(',') + ' address ' + user.address.user.id);          
     },
     function (session, results) {        
         console.log('test 2');    
