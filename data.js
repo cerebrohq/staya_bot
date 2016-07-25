@@ -1,13 +1,6 @@
 
 var trace = require('./trace');
 
-var userData = {
-    user_professions : null
-,   area: null
-,   address: null
-,   time: null
-};
-
 /*
 var user = {
     address : null
@@ -30,8 +23,7 @@ function userId(message)
 function addUser(message)
 { 
     var id = userId(message);
-    if (id) {
-        
+    if (id) {        
         trace.log('addUser befor', id, listUsers[id])
         if (listUsers[id]) {
             listUsers[id].address = message.address;

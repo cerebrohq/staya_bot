@@ -1,6 +1,7 @@
 
 var restify = require('restify');
 var bot = require('./bot');
+var db = require('./db');
 
 
 var server = restify.createServer();
