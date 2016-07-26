@@ -79,8 +79,9 @@ function setProfsDb(id, profs)
                 stm.finalize();
             } 
         }
-    });
-}
+   });
+};
+
 
 function setTimeSendDb(id, time)
 { 
@@ -93,6 +94,23 @@ function setTimeSendDb(id, time)
            if(row.count > 0) {
                 var stm = db.prepare('update users set time=? where id = ?');
                 stm.run(time, id);
+                stm.finalize();
+            } 
+        }
+    });
+};
+
+function setAreaDb(id, area)
+{
+    var db = sql.db();
+    db.get('select count(*) as count from users where id = ?', id, function (err, row) {
+        if (err) {
+            trace.log('setAreaDb error', id, err);
+        } else {
+            trace.log('setAreaDb exists', id, row.count);
+           if(row.count > 0) {
+                var stm = db.prepare('update users set area=? where id = ?');
+                stm.run(area, id);
                 stm.finalize();
             } 
         }
@@ -157,6 +175,17 @@ function setTimeSend(message, time)
     }
 };
 
+function setArea(message, area)
+{  
+    var id = userId(message);   
+    if (id)  { 
+        setAreaDb(id, area);
+        trace.log('setArea befor', id, listUsers[id] != undefined)
+        listUsers[id].area = area;
+        trace.log('setArea after', listUsers[id] != undefined)  
+    }
+};
+
 function user(message)
 { 
     var id = userId(message);
@@ -166,12 +195,13 @@ function user(message)
 
 function users()
 { 
-    return listUsers;   
+    return listUsers;
 };
 
 
 module.exports.initDb = initDb;
 module.exports.getUserDb = getUserDb;
+module.exports.setArea = setArea;
 module.exports.addUser = addUser;
 module.exports.removeUser = removeUser;
 module.exports.setProfs = setProfs;

@@ -93,7 +93,7 @@ bot.dialog('/stop',  [
 
 bot.dialog('/restartNew',  [
     function (session) {  
-        data.removeUser(session.message, function (){
+        data.removeUser(session.message, function () {
             session.endDialog(); 
             session.beginDialog('/'); 
         });           
@@ -103,11 +103,37 @@ bot.dialog('/restartNew',  [
     }
 ]);
 
+bot.dialog('/setresource',  [
+    function (session, profs) { 
+        console.log('setresource 1');         
+        builder.Prompts.text(session, messages.selectArea);                   
+    },
+    function (session, results) { 
+        console.log('setresource 2');            
+        if (results.response) {
+            var str = results.response;
+            if (str[str.length-1] == '/') {
+                str = str.substring(0, str.length - 1)
+            }
+
+            if (str == 'http://jobs.staya.vc') {
+                str = null;
+            }
+
+            data.setArea(session.message, str);  
+        }  
+
+        session.endDialog(); 
+        session.beginDialog('/start');      
+    }
+]);
+
 bot.dialog('/test',  [
     function (session) { 
         console.log('test 1'); 
         var user = data.user(session.message);
-        session.endDialog('time ' + user.time + ' profs ' + user.profs.join(',') + ' address ' + user.address.user.id);          
+        var area = (user.area) ? user.area : 'http://jobs.staya.vc';
+        session.endDialog('time ' + user.time + ' profs ' + user.profs.join(',') + ' address ' + user.address.user.id + ' area ' + area);          
     },
     function (session, results) {        
         console.log('test 2');    
@@ -118,7 +144,8 @@ bot.dialog('/adquery',  [
     function (session) { 
         console.log('adquery 1'); 
         data.getUserDb(session.message, function (user) {
-            var str = (user) ? ('time ' + user.time + ' profs ' + user.profs + ' address ' + JSON.parse(user.address).user.id) : 'no user db';
+            var area = (user && user.area) ? user.area : 'http://jobs.staya.vc';
+            var str = (user) ? ('time ' + user.time + ' profs ' + user.profs + ' address ' + JSON.parse(user.address).user.id + ' area ' + area) : 'user not exists';
             session.endDialog(str);   
         });       
                  

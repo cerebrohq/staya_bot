@@ -55,9 +55,10 @@ function sendWork(time, bot, user)
     strtime = strtime.replace('T', '%20');
     strtime = strtime.replace(' ', '%20');
     strtime = strtime.slice(0, -5);
-
     console.log(strtime); 
-    var url =  'http://jobs.staya.vc/api/jobs?limit=15&order_by=created_at&direction=desc&order_by=created_at&created_from=' + strtime + '&prof_areas=' + user.profs.join(',');
+   var area = (user.area) ? user.area : 'http://jobs.staya.vc';
+    
+    var url =  area + '/api/jobs?limit=15&order_by=created_at&direction=desc&order_by=created_at&created_from=' + strtime + '&prof_areas=' + user.profs.join(',');
 
     console.log('sendWork start', timeDate);  
     console.log('sendWork start', url);  

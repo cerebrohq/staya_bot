@@ -16,8 +16,27 @@ function initDb(listUsers) {
     var newdb = new sqlite3.Database(file);
     newdb.serialize(function() {
         if(!exists) {
-            newdb.run("CREATE TABLE users (id TEXT PRIMARY KEY NOT NULL, address TEXT, profs TEXT, time INTEGER)");
-        }   
+            newdb.run("CREATE TABLE users (id TEXT PRIMARY KEY NOT NULL, address TEXT, profs TEXT, time INTEGER, area TEXT)"); //
+        } else {
+            newdb.all('pragma table_info(users)', function (err, rows) {
+                var has = false;
+                for (var i = 0; i < rows.length; i++) {
+                    if (rows[i].name == 'area')
+                    {
+                        has = true;                        
+                        break;
+                    }
+                }
+                trace.log('initDb has area column', has);
+                if (!has) {
+                    var stm = newdb.prepare('ALTER TABLE users ADD COLUMN area TEXT');
+                    stm.run();
+                    stm.finalize();                     
+                }
+                newdb.close();
+            });
+        } 
+
         newdb.each("select * from users", function(err, row) {
             if (err) {
                 trace.log('initDb error', err);
@@ -26,11 +45,13 @@ function initDb(listUsers) {
                 user.address = JSON.parse(row.address);
                 user.profs = JSON.parse(row.profs);
                 user.time = row.time;
+                user.area = row.area;
                 listUsers[row.id] = user;
             }
         });
     }); 
-    newdb.close();  
+    if(!exists)
+        newdb.close();  
 };
 
 function db() {
