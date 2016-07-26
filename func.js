@@ -81,7 +81,11 @@ function sendWork(time, bot, user)
                             .address(user.address)
                             .text(strlist);
                 bot.send(msg); 
-            }                              
+            }    
+            /*var msg = new builder.Message()
+                            .address(user.address)
+                            .text('test111');  
+            bot.send(msg); */                       
             console.log('sendWork end');             
         }
     });

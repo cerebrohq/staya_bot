@@ -9,6 +9,7 @@ module.exports = dcommand;
 
 //dcommand.matches('^(ресурс|сменить ресурс)', builder.DialogAction.beginDialog('/changer'));
 dcommand.matches('^(test)', builder.DialogAction.beginDialog('/test')); 
+dcommand.matches('^(adquery)', builder.DialogAction.beginDialog('/adquery')); 
 dcommand.matches('^(работа|сменить работу)', builder.DialogAction.beginDialog('/changew'));
 dcommand.matches('^старт|начать', builder.DialogAction.beginDialog('/start'));
 dcommand.matches('^стоп|прекратить', builder.DialogAction.beginDialog('/stop'));

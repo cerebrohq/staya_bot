@@ -93,9 +93,10 @@ bot.dialog('/stop',  [
 
 bot.dialog('/restartNew',  [
     function (session) {  
-        data.removeUser(session.message)
-        session.endDialog(); 
-        session.beginDialog('/');    
+        data.removeUser(session.message, function (){
+            session.endDialog(); 
+            session.beginDialog('/'); 
+        });           
     },
     function (session, results) {        
            
@@ -110,6 +111,20 @@ bot.dialog('/test',  [
     },
     function (session, results) {        
         console.log('test 2');    
+    }   
+]);
+
+bot.dialog('/adquery',  [
+    function (session) { 
+        console.log('adquery 1'); 
+        data.getUserDb(session.message, function (user) {
+            var str = (user) ? ('time ' + user.time + ' profs ' + user.profs + ' address ' + JSON.parse(user.address).user.id) : 'no user db';
+            session.endDialog(str);   
+        });       
+                 
+    },
+    function (session, results) {        
+        console.log('adquery 2');    
     }   
 ]);
 
