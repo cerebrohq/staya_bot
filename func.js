@@ -74,13 +74,20 @@ function sendWork(time, bot, user)
             var vacancy = body.list;            
 
             for (var i = 0; i < vacancy.length; i++) { 
-                var strlist = '###' + vacancy[i].topic + '\n\n';              
-                strlist += vacancy[i].description_short;
-                strlist += '\n\n';
-                strlist += vacancy[i].url; 
+                var strheader = '###' + vacancy[i].topic + '\n\n';
+                var strtext = vacancy[i].description_short;
+                var strurl = '\n\n' + vacancy[i].url; 
+
+                // for fucking facebook messager
+                var sizeadd = strheader.length + strurl.length;
+                if (strtext.length > (320 - sizeadd)) {
+                    strtext = strtext.substring(0, (317 - sizeadd)) + '...';                    
+                }
+
+                var str = strheader + strtext + strurl;
                 var msg = new builder.Message()
                             .address(user.address)
-                            .text(strlist);
+                            .text(str);
                 bot.send(msg); 
             }    
             /*var msg = new builder.Message()
