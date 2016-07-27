@@ -201,6 +201,7 @@ function users()
 
 module.exports.initDb = initDb;
 module.exports.getUserDb = getUserDb;
+module.exports.setTimeSendDb = setTimeSendDb;
 module.exports.setArea = setArea;
 module.exports.addUser = addUser;
 module.exports.removeUser = removeUser;
@@ -208,4 +209,5 @@ module.exports.setProfs = setProfs;
 module.exports.setTimeSend = setTimeSend;
 module.exports.user = user;
 module.exports.users = users;
+
 

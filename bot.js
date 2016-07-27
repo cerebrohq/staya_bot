@@ -164,6 +164,7 @@ setInterval(function() {
                         if ((newtime - user.time) >= 300000) {
                             var sendtime = user.time; 
                             users[id].time = newtime;
+                            data.setTimeSendDb(id, newtime);    
                             query.sendWork(sendtime, bot, user);
                         }
                     }   
