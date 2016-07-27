@@ -161,7 +161,7 @@ setInterval(function() {
                     var user = users[id];
                     if (user && user.time && user.profs) {
                         var newtime = new Date().getTime();
-                        if ((newtime - user.time) >= 300000) {
+                        if ((newtime - user.time) >= 600000) {
                             var sendtime = user.time; 
                             users[id].time = newtime;
                             data.setTimeSendDb(id, newtime);    
@@ -170,7 +170,7 @@ setInterval(function() {
                     }   
                 }
                 
-        }, 300000);   
+        }, 600000);   
 
 
 
