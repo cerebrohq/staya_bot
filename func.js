@@ -79,9 +79,9 @@ function sendWork(time, bot, user)
                 var strurl = '\n\n' + vacancy[i].url; 
 
                 // for fucking facebook messager
-                var sizeadd = strheader.length + strurl.length;
-                if (strtext.length > (320 - sizeadd)) {
-                    strtext = strtext.substring(0, (317 - sizeadd)) + '...';                    
+                var sizeadd = strheader.length + strurl.length + 3; // 3 for ### endind header in facebook
+                if (strtext.length > (300 - sizeadd)) {
+                    strtext = strtext.substring(0, (297 - sizeadd)) + '...';                    
                 }
 
                 var str = strheader + strtext + strurl;
