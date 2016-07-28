@@ -47,6 +47,19 @@ function getUserDb(message, callback)
     });
 }
 
+function getSizeDb(message, callback)
+{
+    var db = sql.db();
+    db.get('select count(*) as count from users', function (err, row) {
+        if (err) {
+            trace.log('getSizeDb error', err);
+        } else {
+            trace.log('getSizeDb exists', row != null);
+            callback(row.count);            
+        }
+    });
+}
+
 function removeUserDb(id, callback)
 {
     var db = sql.db();    
@@ -201,6 +214,7 @@ function users()
 
 module.exports.initDb = initDb;
 module.exports.getUserDb = getUserDb;
+module.exports.getSizeDb = getSizeDb;
 module.exports.setTimeSendDb = setTimeSendDb;
 module.exports.setArea = setArea;
 module.exports.addUser = addUser;

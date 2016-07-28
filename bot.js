@@ -155,6 +155,20 @@ bot.dialog('/adquery',  [
     }   
 ]);
 
+bot.dialog('/adcount',  [
+    function (session) { 
+        console.log('adcount 1'); 
+        data.getSizeDb(session.message, function (count) {
+            var str = 'count ' + count;
+            session.endDialog(str);   
+        });       
+                 
+    },
+    function (session, results) {        
+        console.log('adquery 2');    
+    }   
+]);
+
 setInterval(function() {
                 users = data.users();                
                 for (var id in users) {
