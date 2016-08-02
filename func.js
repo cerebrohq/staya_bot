@@ -81,8 +81,8 @@ function sendWork(time, bot, user)
 
                 // for fucking facebook messager
                 var sizeadd = strheader.length + strurl.length + 3; // 3 for ### endind header in facebook
-                if (strtext.length > (300 - sizeadd)) {
-                    strtext = strtext.substring(0, (297 - sizeadd)) + '...';                    
+                if (strtext.length > (299 - sizeadd)) {
+                    strtext = strtext.substring(0, (296 - sizeadd)) + '...';                    
                 }
 
                 var str = strheader + strtext + strurl;
