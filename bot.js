@@ -34,30 +34,34 @@ bot.dialog('/changewResult',  [
         console.log('changewResult 2');
 
         var profIds = Array();
-        if (results.response && session.userData.profession_list)
-        {
+        if (results.response && /^(отменить|потом)/i.test(results.response)) {
+            session.endDialog(messages.cancel);
+        } else if (results.response && session.userData.profession_list)  {
             var profs = results.response.split(/\D+/);          
             for (var i = 0; i < profs.length; i++) {
                 var id = Number(profs[i]);
                 if (id && id > 0) {
                     profIds[profIds.length] = session.userData.profession_list[id-1].id;   
                 }                       
-            }                      
-        }  
+            }
 
-        if (profIds.length > 0) {
-            data.setProfs(session.message, profIds);            
+            if (profIds.length > 0) {
+                data.setProfs(session.message, profIds);            
+            }
+
+            if (profIds.length > 0) {
+                session.endDialog(messages.goоdMessage);                
+                var timeDate = new Date();           
+                data.setTimeSend(session.message, timeDate.getTime());                
+                timeDate.setDate(timeDate.getDate() - 3);
+                query.sendWork(timeDate.getTime(), bot, data.user(session.message));
+            } else {
+                session.endDialog(messages.badMessage); 
+            }                       
         }
-
-        if (profIds.length > 0) {
-            session.endDialog(messages.goоdMessage);                
-            var timeDate = new Date();           
-            data.setTimeSend(session.message, timeDate.getTime());                
-            timeDate.setDate(timeDate.getDate() - 3);
-            query.sendWork(timeDate.getTime(), bot, data.user(session.message));
-        } else {
-            session.endDialog(messages.badMessage); 
-        }        
+        else {
+            session.endDialog(messages.badMessage);
+        }                
     }
 ]);
 
@@ -91,6 +95,30 @@ bot.dialog('/stop',  [
     }
 ]);
 
+bot.dialog('/stopListen',  [
+    function (session) {  
+        data.setDoNotListen(session.message, true);  
+        session.send(messages.stopListen);
+        session.endDialog();          
+    },
+    function (session, results) {        
+           
+    }
+]);
+
+bot.dialog('/startListen',  [
+    function (session) {  
+        data.setDoNotListen(session.message, false);  
+        session.send(messages.startListen);
+        session.send(messages.helloText);
+        session.send(messages.helpMessage);
+        session.endDialog();          
+    },
+    function (session, results) {        
+           
+    }
+]);
+
 bot.dialog('/restartNew',  [
     function (session) {  
         data.removeUser(session.message, function () {
@@ -109,22 +137,30 @@ bot.dialog('/setresource',  [
         builder.Prompts.text(session, messages.selectArea);                   
     },
     function (session, results) { 
-        console.log('setresource 2');            
-        if (results.response) {
+        console.log('setresource 2'); 
+        if (results.response && /^(отменить|потом)/i.test(results.response)) {
+            session.endDialog(messages.cancel);
+        } else if (results.response) {
             var str = results.response;
-            if (str[str.length-1] == '/') {
+            if (!/^(http)/i.test(str)) {
+                session.endDialog(messages.badMessage);
+            } else {
+                if (str[str.length-1] == '/') {
                 str = str.substring(0, str.length - 1)
-            }
+                }
 
-            if (str == 'http://jobs.staya.vc') {
-                str = null;
-            }
+                if (str == 'http://jobs.staya.vc') {
+                    str = null;
+                }
 
-            data.setArea(session.message, str);  
-        }  
+                data.setArea(session.message, str);  
 
-        session.endDialog(); 
-        session.beginDialog('/start');      
+                session.endDialog(); 
+                session.beginDialog('/start');
+            }            
+        } else {
+            session.endDialog(messages.badMessage);
+        }             
     }
 ]);
 
@@ -133,7 +169,7 @@ bot.dialog('/test',  [
         console.log('test 1'); 
         var user = data.user(session.message);
         var area = (user.area) ? user.area : 'http://jobs.staya.vc';
-        session.endDialog('time ' + user.time + ' profs ' + user.profs.join(',') + ' address ' + user.address.user.id + ' area ' + area);          
+        session.endDialog('time ' + user.time + ' profs ' + user.profs.join(',') + ' address ' + user.address.user.id + ' area ' + area + ' flags ' + user.flags);          
     },
     function (session, results) {        
         console.log('test 2');    
@@ -145,7 +181,7 @@ bot.dialog('/adquery',  [
         console.log('adquery 1'); 
         data.getUserDb(session.message, function (user) {
             var area = (user && user.area) ? user.area : 'http://jobs.staya.vc';
-            var str = (user) ? ('time ' + user.time + ' profs ' + user.profs + ' address ' + JSON.parse(user.address).user.id + ' area ' + area) : 'user not exists';
+            var str = (user) ? ('time ' + user.time + ' profs ' + user.profs + ' address ' + JSON.parse(user.address).user.id + ' area ' + area + ' flags ' + user.flags) : 'user not exists';
             session.endDialog(str);   
         });       
                  

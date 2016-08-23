@@ -16,20 +16,34 @@ function initDb(listUsers) {
     var newdb = new sqlite3.Database(file);
     newdb.serialize(function() {
         if(!exists) {
-            newdb.run("CREATE TABLE users (id TEXT PRIMARY KEY NOT NULL, address TEXT, profs TEXT, time INTEGER, area TEXT)"); //
+            newdb.run("CREATE TABLE users (id TEXT PRIMARY KEY NOT NULL, address TEXT, profs TEXT, time INTEGER, area TEXT, flags INTEGER DEFAULT 0)"); //
+            /*
+            flags INTEGER:
+            b0 - deleted?
+            b1 - do not listen commands
+            */
         } else {
             newdb.all('pragma table_info(users)', function (err, rows) {
-                var has = false;
+                var hasArea = false;
+                var hasFlags = false;
                 for (var i = 0; i < rows.length; i++) {
                     if (rows[i].name == 'area')
                     {
-                        has = true;                        
-                        break;
+                        hasArea = true;
+                    } else if (rows[i].name == 'flags')
+                    {
+                        hasFlags = true;
                     }
                 }
-                trace.log('initDb has area column', has);
-                if (!has) {
+                trace.log('initDb has area column', hasArea);
+                if (!hasArea) {
                     var stm = newdb.prepare('ALTER TABLE users ADD COLUMN area TEXT');
+                    stm.run();
+                    stm.finalize();                     
+                }
+                trace.log('initDb has flags column', hasFlags);
+                if (!hasFlags) {
+                    var stm = newdb.prepare('ALTER TABLE users ADD COLUMN flags INTEGER DEFAULT 0');
                     stm.run();
                     stm.finalize();                     
                 }
@@ -46,6 +60,7 @@ function initDb(listUsers) {
                 user.profs = JSON.parse(row.profs);
                 user.time = row.time;
                 user.area = row.area;
+                user.flags = row.flags;
                 listUsers[row.id] = user;
             }
         });

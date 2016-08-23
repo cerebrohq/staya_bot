@@ -130,6 +130,23 @@ function setAreaDb(id, area)
     });
 };
 
+function setFlagsDb(id, flags)
+{
+    var db = sql.db();
+    db.get('select count(*) as count from users where id = ?', id, function (err, row) {
+        if (err) {
+            trace.log('setFlagsDb error', id, err);
+        } else {
+            trace.log('setFlagsDb exists', id, row.count);
+           if(row.count > 0) {
+                var stm = db.prepare('update users set flags=? where id = ?');
+                stm.run(flags, id);
+                stm.finalize();
+            } 
+        }
+    });
+};
+
 function userId(message)
 {
     var id = null;
@@ -188,6 +205,31 @@ function setTimeSend(message, time)
     }
 };
 
+function hasFlag(flags, bit)
+{
+	return ((flags & (1 << bit))!=0);
+}
+
+function setFlag(direct, flags, bit)
+{
+	return (direct)?(flags | (1<<bit)):(flags & ~(1<<bit));
+}
+
+function setDoNotListen(message, direct)
+{  
+    var id = userId(message);   
+    if (id)  { 
+        var flags = listUsers[id].flags;
+        trace.log('setDoNotListen befor', flags)
+        flags = setFlag(direct, ((flags) ? flags : 0), 1);
+        trace.log('setDoNotListen after', flags)
+        setFlagsDb(id, flags);
+        trace.log('setDoNotListen befor', id, listUsers[id] != undefined)        
+        listUsers[id].flags = flags;
+        trace.log('setDoNotListen after', listUsers[id] != undefined)  
+    }
+};
+
 function setArea(message, area)
 {  
     var id = userId(message);   
@@ -206,6 +248,17 @@ function user(message)
     return listUsers[id]; 
 };
 
+function isListen(message)
+{
+    var id = userId(message);
+    if (id)  {
+        trace.log('flags', listUsers[id].flags, hasFlag(listUsers[id].flags, 1));
+                
+        return !hasFlag(listUsers[id].flags, 1); 
+    }
+    return true;
+}
+
 function users()
 { 
     return listUsers;
@@ -221,6 +274,8 @@ module.exports.addUser = addUser;
 module.exports.removeUser = removeUser;
 module.exports.setProfs = setProfs;
 module.exports.setTimeSend = setTimeSend;
+module.exports.setDoNotListen = setDoNotListen;
+module.exports.isListen = isListen;
 module.exports.user = user;
 module.exports.users = users;
 
