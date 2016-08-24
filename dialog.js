@@ -21,9 +21,9 @@ dcommand.matches('/^(отменить|потом)/i', builder.DialogAction.endDi
 function doCommand(session, args)
 {
     if (data.isListen(session.message)) {
-        if (/^(stayabot не слушай|ыефнфище не слушай|стаябот не слушай)/i.test(session.message.text)) {
+        if (/^(stayabot не слушай|ыефнфище не слушай|стаябот не слушай|stayabot yt ckeifq)/i.test(session.message.text)) {
             session.beginDialog('/stopListen'); 
-        } else if (/^(stayabot слушай|ыефнфище слушай|стаябот слушай)/i.test(session.message.text)) {
+        } else if (/^(stayabot слушай|ыефнфище слушай|стаябот слушай|stayabot ckeifq)/i.test(session.message.text)) {
             session.beginDialog('/startListen');
         } else if (/^(adtest)/i.test(session.message.text)) {
             session.beginDialog('/test');  // hidden
@@ -47,7 +47,7 @@ function doCommand(session, args)
             session.send(messages.helloText);  
             session.send(messages.helpMessage);
         }
-    } else if (/^(stayabot слушай|ыефнфище слушай|стаябот слушай)/i.test(session.message.text)) {
+    } else if (/^(stayabot слушай|ыефнфище слушай|стаябот слушай|stayabot ckeifq)/i.test(session.message.text)) {
         session.beginDialog('/startListen');
     }  
 }; 
@@ -63,7 +63,7 @@ function (session, args, next) {
         session.beginDialog('/changew');         
     } else {        
         doCommand(session, args);
-    }
+    }   
 }
 );
 

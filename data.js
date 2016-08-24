@@ -13,7 +13,7 @@ function initDb()
 function addUserDb(id, address)
 {
     var db = sql.db();
-    
+
     db.get('select count(*) as count from users where id = ?', id, function (err, row) {
         if (err) {
             trace.log('addUserDb error', id, err);
@@ -151,13 +151,38 @@ function userId(message)
 {
     var id = null;
     if (message)
-        id = message.address.conversation.id;
+    {
+        if (message.address.conversation.isGroup == true) { //message.address.conversation.isGroup && 
+            id = message.address.conversation.id;
+        } else {
+            id = message.user.id;
+        }
+
+    }
 
         return id;
 };
 
 function addUser(message)
 { 
+    var db = sql.db();
+
+    /*users = users();                
+    for (var id in users) { 
+        var user = users[id];          
+
+        if (user.address.conversation.isGroup == true) {
+             var query = 'update users set id=? where id = ?';           
+            var stm = db.prepare(query);
+
+            console.log(id, user.address.conversation.id);
+
+            stm.run(user.address.conversation.id, id);                   
+            
+            stm.finalize();
+        }      
+    }*/
+
     var id = userId(message);
     if (id) {        
         addUserDb(id, message.address);
