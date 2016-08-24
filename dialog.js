@@ -56,7 +56,7 @@ dcommand.onBegin
 (
 function (session, args, next) {
     
-    console.log('begin 1'); 
+    console.log('begin 1');     
     data.addUser(session.message);     
     if (!data.user(session.message).profs) {   
         session.send(messages.beginText); 

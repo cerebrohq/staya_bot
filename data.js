@@ -151,7 +151,7 @@ function userId(message)
 {
     var id = null;
     if (message)
-        id = message.user.id;
+        id = message.address.conversation.id;
 
         return id;
 };
@@ -169,7 +169,7 @@ function addUser(message)
             listUsers[id].address = message.address;
         }
         trace.log('addUser after', listUsers[id] != undefined) 
-    }    
+    }   
 };
 
 function removeUser(message, callback)
@@ -219,7 +219,7 @@ function setDoNotListen(message, direct)
 {  
     var id = userId(message);   
     if (id)  { 
-        var flags = listUsers[id].flags;
+        var flags = (listUsers[id].flags) ? listUsers[id].flags : 0;
         trace.log('setDoNotListen befor', flags)
         flags = setFlag(direct, ((flags) ? flags : 0), 1);
         trace.log('setDoNotListen after', flags)
@@ -251,9 +251,7 @@ function user(message)
 function isListen(message)
 {
     var id = userId(message);
-    if (id)  {
-        trace.log('flags', listUsers[id].flags, hasFlag(listUsers[id].flags, 1));
-                
+    if (id && listUsers[id].flags)  {                
         return !hasFlag(listUsers[id].flags, 1); 
     }
     return true;
