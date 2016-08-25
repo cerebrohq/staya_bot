@@ -31,7 +31,9 @@ function doCommand(session, args)
             session.beginDialog('/adquery');  // hidden    
         } else if (/^(adcount)/i.test(session.message.text)) {
             session.beginDialog('/adcount');  // hidden
-        } else if (/^(площадка)/i.test(session.message.text)) {
+        } else if (/^(addelete)/i.test(session.message.text)) {
+            session.beginDialog('/addelete');  // hidden
+        }else if (/^(площадка)/i.test(session.message.text)) {
             session.beginDialog('/setresource');  // hidden
         } else if (/^(работа|сменить работу)/i.test(session.message.text)) {
             session.beginDialog('/changew');  

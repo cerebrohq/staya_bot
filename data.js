@@ -64,6 +64,7 @@ function removeUserDb(id, callback)
 {
     var db = sql.db();    
     db.get('select count(*) as count from users where id = ?', id, function (err, row) {
+        var del = false;
         if (err) {
             trace.log('removeUserDb error', id, err);
         } else {
@@ -72,9 +73,10 @@ function removeUserDb(id, callback)
                 var stm = db.prepare('delete from users where id=?');
                 stm.run(id);
                 stm.finalize();
+                del = true;
             }            
         }
-        callback();
+        callback(del);
     });
 }
 
@@ -197,9 +199,8 @@ function addUser(message)
     }   
 };
 
-function removeUser(message, callback)
-{ 
-    var id = userId(message);
+function removeUser(id, callback) 
+{    
     if (id) {
         removeUserDb(id, callback);
         trace.log('removeUser befor', id, listUsers[id] != undefined)
