@@ -34,7 +34,7 @@ function addUserDb(id, address)
 
 function getUserDb(id, callback)
 {
-    var db = sql.db();    
+    var db = sql.db(); 
     db.get('select * from users where id = ?', id, function (err, row) {
         if (err) {
             trace.log('getUserDb error', id, err);
