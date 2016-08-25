@@ -33,17 +33,16 @@ function addUserDb(id, address)
     });
 }
 
-function getUserDb(message, callback)
+function getUserDb(id, callback)
 {
-    var db = sql.db();
-    var id = userId(message);
+    var db = sql.db();    
     db.get('select * from users where id = ?', id, function (err, row) {
         if (err) {
             trace.log('getUserDb error', id, err);
         } else {
-            trace.log('getUserDb exists', id, row != null);
-            callback(row);            
+            trace.log('getUserDb exists', id, row != null);                       
         }
+        callback(row); 
     });
 }
 
@@ -76,7 +75,8 @@ function removeUserDb(id, callback)
                 del = true;
             }            
         }
-        callback(del);
+        if (callback)
+            callback(del);
     });
 }
 
@@ -115,10 +115,11 @@ function setTimeSendDb(id, time)
     });
 };
 
-function setAreaDb(id, area)
+function setAreaDb(id, area, callback)
 {
     var db = sql.db();
     db.get('select count(*) as count from users where id = ?', id, function (err, row) {
+        var set = false
         if (err) {
             trace.log('setAreaDb error', id, err);
         } else {
@@ -126,9 +127,12 @@ function setAreaDb(id, area)
            if(row.count > 0) {
                 var stm = db.prepare('update users set area=? where id = ?');
                 stm.run(area, id);
-                stm.finalize();
-            } 
+                stm.finalize(); 
+                set = true;               
+            }            
         }
+        if (callback)
+            callback(set);
     });
 };
 
@@ -199,8 +203,9 @@ function addUser(message)
     }   
 };
 
-function removeUser(id, callback) 
-{    
+function removeUser(message, callback) 
+{
+    var id = userId(message);     
     if (id) {
         removeUserDb(id, callback);
         trace.log('removeUser befor', id, listUsers[id] != undefined)
@@ -292,6 +297,8 @@ function users()
 module.exports.initDb = initDb;
 module.exports.getUserDb = getUserDb;
 module.exports.getSizeDb = getSizeDb;
+module.exports.setAreaDb = setAreaDb;
+module.exports.removeUserDb = removeUserDb;
 module.exports.setTimeSendDb = setTimeSendDb;
 module.exports.setArea = setArea;
 module.exports.addUser = addUser;
@@ -302,5 +309,6 @@ module.exports.setDoNotListen = setDoNotListen;
 module.exports.isListen = isListen;
 module.exports.user = user;
 module.exports.users = users;
+module.exports.userId = userId;
 
 

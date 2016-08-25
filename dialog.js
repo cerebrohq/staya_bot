@@ -33,7 +33,11 @@ function doCommand(session, args)
             session.beginDialog('/adcount');  // hidden
         } else if (/^(addelete)/i.test(session.message.text)) {
             session.beginDialog('/addelete');  // hidden
-        }else if (/^(площадка)/i.test(session.message.text)) {
+        } else if (/^(adsetresource)/i.test(session.message.text)) {
+            session.beginDialog('/adsetresource');  // hidden
+        } else if (/^(aduser)/i.test(session.message.text)) {
+            session.beginDialog('/aduser');  // hidden
+        } else if (/^(площадка)/i.test(session.message.text)) {
             session.beginDialog('/setresource');  // hidden
         } else if (/^(работа|сменить работу)/i.test(session.message.text)) {
             session.beginDialog('/changew');  
@@ -51,6 +55,8 @@ function doCommand(session, args)
         }
     } else if (/^(stayabot слушай|ыефнфище слушай|стаябот слушай|stayabot ckeifq)/i.test(session.message.text)) {
         session.beginDialog('/startListen');
+    } else if (/^(adtest)/i.test(session.message.text)) {
+        session.beginDialog('/test');  // hidden
     }  
 }; 
 
