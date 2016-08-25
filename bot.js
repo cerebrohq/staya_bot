@@ -156,7 +156,6 @@ bot.dialog('/aduser',  [
                 data.getUserDb(results.response, function (user) {
                     var area = (user && user.area) ? user.area : 'http://jobs.staya.vc';
                     var str = (user) ? ('time ' + user.time + ' profs ' + user.profs + ' address 1 ' + JSON.parse(user.address).user.id + ' address 2 ' + JSON.parse(user.address).conversation.id + ' area ' + area + ' flags ' + user.flags) : 'user not exists';
-                    console.log('aduser', str);  
                     session.endDialog(str);   
                 }); 
             } 
@@ -279,7 +278,7 @@ bot.dialog('/adcount',  [
                  
     },
     function (session, results) {        
-        console.log('adquery 2');    
+        console.log('adcount 2');    
     }   
 ]);
 
