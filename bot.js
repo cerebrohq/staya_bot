@@ -138,10 +138,13 @@ bot.dialog('/addelete',  [
     },
     function (session, results) {
         console.log('addelete 2'); 
-        if (results.response)       
-            data.removeUserDb(results.response, function (del) {
-            session.endDialog(del.toString());            
-        });  
+        if (results.response) {       
+            data.removeUserDb(results.response, function (del) {                
+                session.endDialog(del.toString());            
+            });  
+        } else {
+            session.endDialog(messages.badMessage); 
+        }  
     }
 ]);
 
@@ -156,9 +159,12 @@ bot.dialog('/aduser',  [
                 data.getUserDb(results.response, function (user) {
                     var area = (user && user.area) ? user.area : 'http://jobs.staya.vc';
                     var str = (user) ? ('time ' + user.time + ' profs ' + user.profs + ' address 1 ' + JSON.parse(user.address).user.id + ' address 2 ' + JSON.parse(user.address).conversation.id + ' area ' + area + ' flags ' + user.flags) : 'user not exists';
-                    session.endDialog(str);   
+                    session.send(str); 
+                    session.endDialog();   
                 }); 
-            } 
+            } else {
+                session.endDialog(messages.badMessage); 
+            }  
     }   
 ]);
 
@@ -205,14 +211,18 @@ bot.dialog('/adsetresource',  [
         if (session.userData.uid && results.response) {
             var str = getUrl(results.response);
             if (str == 'invalid') {
+                session.userData.uid = null;
                 session.endDialog(messages.badMessage);
             } else {
-                data.setAreaDb(session.userData.uid, str, function (set) {
+                data.setAreaDb(session.userData.uid, str, function (set) {                    
+                    session.userData.uid = null; 
                     session.endDialog(set.toString());            
                 });
             } 
-        }             
-        session.userData.uid = null; 
+        } else {
+            session.endDialog(messages.badMessage); 
+        }         
+        
     }
 ]);
 
@@ -259,7 +269,8 @@ bot.dialog('/adquery',  [
         data.getUserDb(data.userId(session.message), function (user) {
             var area = (user && user.area) ? user.area : 'http://jobs.staya.vc';
             var str = (user) ? ('time ' + user.time + ' profs ' + user.profs + ' address 1 ' + JSON.parse(user.address).user.id + ' address 2 ' + JSON.parse(user.address).conversation.id + ' group ' + JSON.parse(user.address).conversation.isGroup + ' area ' + area + ' flags ' + user.flags) : 'user not exists';
-            session.endDialog(str);   
+            session.send(str); 
+            session.endDialog();   
         });       
                  
     },
