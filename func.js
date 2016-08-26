@@ -89,9 +89,9 @@ function sendWork(time, bot, user)
                 var msg = new builder.Message()
                             .address(user.address)
                             .text(str);
-                                
+
                 //if (user.address.channelId == 'slack') {
-                    msg.sourceEvent({"unfurl_links":true, "unfurl_media":true});
+                    msg.sourceEvent(vacancy[i].url);
                 //}
 
                 bot.send(msg); 
