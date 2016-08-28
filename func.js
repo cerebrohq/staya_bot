@@ -100,7 +100,7 @@ function sendWork(time, bot, user)
                     //msg.text(tagurlbegin + vacancy[i].url + '?utm_source=bot&utm_campaign=bot&utm_medium=' + user.address.channelId + tagurlend)
                    //msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
 
-                    var msg1 = new builder.Message()
+                    /*var msg1 = new builder.Message()
                             .address(user.address)
                             .text("<http://jobs.staya.vc/job/220?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
                     msg1.channelData = ({unfurl_links:"true", unfurl_media:"true"});
@@ -122,7 +122,7 @@ function sendWork(time, bot, user)
                             .address(user.address)
                             .text("dfhsdfgsf\n\n<https://jobs.staya.vc/job/220?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
                     msg4.channelData = ({unfurl_links:"true", unfurl_media:"true"});
-                    bot.send(msg4);         
+                    bot.send(msg4);*/         
                 }
 
                 bot.send(msg); 
