@@ -96,7 +96,7 @@ function sendWork(time, bot, user)
                             .address(user.address)
                             .text(str);
                                 
-                if (user.address.channelId == 'slack') {
+                if (user.address.user.name == 'ehtemka' && user.address.channelId == 'slack') {
                     //msg.text(tagurlbegin + vacancy[i].url + '?utm_source=bot&utm_campaign=bot&utm_medium=' + user.address.channelId + tagurlend)
                    //msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
 
