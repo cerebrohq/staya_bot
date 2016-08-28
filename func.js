@@ -97,16 +97,19 @@ function sendWork(time, bot, user)
                             .text(str);
                                 
                 if (user.address.channelId == 'slack') {
-                    msg.text(tagurlbegin + vacancy[i].url + '?utm_source=bot&utm_campaign=bot&utm_medium=' + user.address.channelId + tagurlend)
-                    msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
+                    //msg.text(tagurlbegin + vacancy[i].url + '?utm_source=bot&utm_campaign=bot&utm_medium=' + user.address.channelId + tagurlend)
+                   //msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
+
+                    var msg1 = new builder.Message()
+                            .address(user.address)
+                            .text("<http://www.youtube.com/watch?v=wq1R93UMqlk>");
+                    msg1.channelData = ({unfurl_links:"true", unfurl_media:"true"});
+                    bot.send(msg1);       
                 }
 
                 bot.send(msg); 
             }    
-            /*var msg = new builder.Message()
-                            .address(user.address)
-                            .text('test111');  
-            bot.send(msg); */                       
+                            
             console.log('sendWork end');             
         }
     });
