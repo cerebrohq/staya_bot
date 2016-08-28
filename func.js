@@ -102,7 +102,7 @@ function sendWork(time, bot, user)
 
                     var msg1 = new builder.Message()
                             .address(user.address)
-                            .text("<http://www.youtube.com/watch?v=wq1R93UMqlk>");
+                            .text("<http://jobs.staya.vc/job/220?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
                     msg1.channelData = ({unfurl_links:"true", unfurl_media:"true"});
                     bot.send(msg1);       
                 }
