@@ -91,7 +91,7 @@ function sendWork(time, bot, user)
                             .text(str);
                                 
                 if (user.address.channelId == 'slack') {
-                    msg.sourceEvent({unfurl_links:"true", unfurl_media:"true"});
+                    msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
                 }
 
                 bot.send(msg); 
