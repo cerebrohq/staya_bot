@@ -104,7 +104,25 @@ function sendWork(time, bot, user)
                             .address(user.address)
                             .text("<http://jobs.staya.vc/job/220?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
                     msg1.channelData = ({unfurl_links:"true", unfurl_media:"true"});
-                    bot.send(msg1);       
+                    bot.send(msg1);  
+
+                    var msg2 = new builder.Message()
+                            .address(user.address)
+                            .text("xbfghnfg hfghg <http://jobs.staya.vc/job/219?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
+                    msg2.channelData = ({unfurl_links:"true", unfurl_media:"true"});
+                    bot.send(msg2); 
+
+                    var msg3 = new builder.Message()
+                            .address(user.address)
+                            .text("<https://jobs.staya.vc/job/220?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
+                    msg3.channelData = ({unfurl_links:"true", unfurl_media:"true"});
+                    bot.send(msg3);  
+
+                     var msg4 = new builder.Message()
+                            .address(user.address)
+                            .text("dfhsdfgsf\n\n<https://jobs.staya.vc/job/220?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
+                    msg4.channelData = ({unfurl_links:"true", unfurl_media:"true"});
+                    bot.send(msg4);         
                 }
 
                 bot.send(msg); 
