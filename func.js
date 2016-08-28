@@ -71,50 +71,30 @@ function sendWork(time, bot, user)
         , function (error, response, body) {
 
         if (!error && response.statusCode === 200) {
-            var vacancy = body.list; 
+            var vacancy = body.list;            
 
-            var strNext = '\n\n';
-            for (var i = 0; i < vacancy.length; i++) {                
-                var strheader = '###' + vacancy[i].topic + strNext;
+            for (var i = 0; i < vacancy.length; i++) { 
+                var strheader = '###' + vacancy[i].topic + '\n\n';
                 var strtext = vacancy[i].description_short;
-                var strurl = vacancy[i].url + '?utm_source=bot&utm_campaign=bot&utm_medium=' + user.address.channelId; 
-                
+                var strurl = '\n\n' + vacancy[i].url + '/?utm_source=bot&utm_campaign=bot&utm_medium=' + user.address.channelId; 
+                //'http://jobs.staya.vc/?utm_source=bot&utm_medium=telegram_bot&utm_campaign=bot'
 
-                var sizeadd = 0;
-                /*if (user.address.channelId == 'slack') {
-                    sizeadd = strheader.length + 3; // 3 for ### endind header in facebook                    
-                } else { */                  
-                    // for fucking facebook messager
-                    sizeadd = strheader.length + strurl.length + strNext.length + 3; // 3 for ### endind header in facebook                    
-                //}
-
+                // for fucking facebook messager
+                var sizeadd = strheader.length + strurl.length + 3; // 3 for ### endind header in facebook
                 if (strtext.length > (299 - sizeadd)) {
                     strtext = strtext.substring(0, (296 - sizeadd)) + '...';                    
                 }
 
-                var str = '';
-                /*if (user.address.channelId == 'slack') {
-                    str = strheader + strtext;
-                } else {*/
-                    str = strheader + strtext + strNext + strurl;
-                //}                
+                var str = strheader + strtext + strurl;
                 var msg = new builder.Message()
                             .address(user.address)
                             .text(str);
+                                
+                if (user.address.channelId == 'slack') {
+                    msg.sourceEvent({unfurl_links:"true", unfurl_media:"true"});
+                }
 
                 bot.send(msg); 
-
-                        
-                /*if (user.address.channelId == 'slack') {
-                    var msg = new builder.Message()
-                            .address(user.address)
-                            .text(strurl);
-
-                    msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
-                    bot.send(msg);
-                }*/
-
-                
             }    
             /*var msg = new builder.Message()
                             .address(user.address)
