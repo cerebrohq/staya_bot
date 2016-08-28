@@ -74,10 +74,10 @@ function sendWork(time, bot, user)
             var vacancy = body.list;     
             var tagurlbegin = '';   
             var tagurlend = '';     
-            /*if (user.address.channelId == 'slack') {
+            if (user.address.channelId == 'slack') {
                 tagurlbegin = '<';
                 tagurlend = '>'
-            }*/
+            }
             for (var i = 0; i < vacancy.length; i++) { 
                 var strheader = '###' + vacancy[i].topic + '\n\n';
                 var strtext = vacancy[i].description_short;
@@ -97,6 +97,7 @@ function sendWork(time, bot, user)
                             .text(str);
                                 
                 if (user.address.channelId == 'slack') {
+                    msg.text(tagurlbegin + vacancy[i].url + '?utm_source=bot&utm_campaign=bot&utm_medium=' + user.address.channelId + tagurlend)
                     msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
                 }
 
