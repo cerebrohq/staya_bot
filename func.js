@@ -81,23 +81,23 @@ function sendWork(time, bot, user)
                 
 
                 var sizeadd = 0;
-                if (user.address.channelId == 'slack') {
+                /*if (user.address.channelId == 'slack') {
                     sizeadd = strheader.length + 3; // 3 for ### endind header in facebook                    
-                } else {                   
+                } else { */                  
                     // for fucking facebook messager
                     sizeadd = strheader.length + strurl.length + strNext.length + 3; // 3 for ### endind header in facebook                    
-                }
+                //}
 
                 if (strtext.length > (299 - sizeadd)) {
                     strtext = strtext.substring(0, (296 - sizeadd)) + '...';                    
                 }
 
                 var str = '';
-                if (user.address.channelId == 'slack') {
+                /*if (user.address.channelId == 'slack') {
                     str = strheader + strtext;
-                } else {
+                } else {*/
                     str = strheader + strtext + strNext + strurl;
-                }                
+                //}                
                 var msg = new builder.Message()
                             .address(user.address)
                             .text(str);
@@ -105,14 +105,14 @@ function sendWork(time, bot, user)
                 bot.send(msg); 
 
                         
-                if (user.address.channelId == 'slack') {
+                /*if (user.address.channelId == 'slack') {
                     var msg = new builder.Message()
                             .address(user.address)
                             .text(strurl);
 
                     msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
                     bot.send(msg);
-                }
+                }*/
 
                 
             }    
