@@ -74,15 +74,15 @@ function sendWork(time, bot, user)
             var vacancy = body.list;     
             var tagurlbegin = '';   
             var tagurlend = '';     
-            if (user.address.channelId == 'slack') {
+            /*if (user.address.channelId == 'slack') {
                 tagurlbegin = '<';
                 tagurlend = '>'
-            }
+            }*/
             for (var i = 0; i < vacancy.length; i++) { 
                 var strheader = '###' + vacancy[i].topic + '\n\n';
                 var strtext = vacancy[i].description_short;
                 
-                var strurl = '\n\n' + tagurlbegin + vacancy[i].url + tagurlend + '?utm_source=bot&utm_campaign=bot&utm_medium=' + user.address.channelId; 
+                var strurl = '\n\n' + tagurlbegin + vacancy[i].url + '?utm_source=bot&utm_campaign=bot&utm_medium=' + user.address.channelId + tagurlend; 
                 //'http://jobs.staya.vc/?utm_source=bot&utm_medium=telegram_bot&utm_campaign=bot'
 
                 // for fucking facebook messager
