@@ -100,7 +100,7 @@ function sendWork(time, bot, user)
                     //msg.text(tagurlbegin + vacancy[i].url + '?utm_source=bot&utm_campaign=bot&utm_medium=' + user.address.channelId + tagurlend)
                    //msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
 
-                    /*var msg1 = new builder.Message()
+                    var msg1 = new builder.Message()
                             .address(user.address)
                             .text("<http://jobs.staya.vc/job/220?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
                     msg1.channelData = ({unfurl_links:"true", unfurl_media:"true"});
@@ -114,15 +114,20 @@ function sendWork(time, bot, user)
 
                     var msg3 = new builder.Message()
                             .address(user.address)
-                            .text("<https://jobs.staya.vc/job/220?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
+                            .text("<https://jobs.staya.vc/job/220/?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
                     msg3.channelData = ({unfurl_links:"true", unfurl_media:"true"});
                     bot.send(msg3);  
 
-                     var msg4 = new builder.Message()
+                    var msg4 = new builder.Message()
                             .address(user.address)
-                            .text("dfhsdfgsf\n\n<https://jobs.staya.vc/job/220?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
+                            .text("dfhsdfgsf\n\n<https://jobs.staya.vc/job/217?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
                     msg4.channelData = ({unfurl_links:"true", unfurl_media:"true"});
-                    bot.send(msg4);*/         
+                    bot.send(msg4); 
+                    var msg5 = new builder.Message()
+                            .address(user.address)
+                            .text("<http://jobs.staya.vc/job/218?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
+                    msg5 = msg5.sourceEvent({unfurl_links:"true", unfurl_media:"true"});
+                    bot.send(msg5);        
                 }
 
                 bot.send(msg); 
