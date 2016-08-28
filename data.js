@@ -165,7 +165,7 @@ function userId(message)
 
     }
 
-        return id;
+    return id;
 };
 
 function addUser(message)

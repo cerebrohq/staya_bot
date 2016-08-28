@@ -268,7 +268,7 @@ bot.dialog('/adquery',  [
         data.getUserDb(data.userId(session.message), function (user) {
             var area = (user && user.area) ? user.area : 'http://jobs.staya.vc';
             var str = (user) ? ('time ' + user.time + ' profs ' + user.profs + ' address 1 ' + JSON.parse(user.address).user.id + ' address 2 ' + JSON.parse(user.address).conversation.id + ' group ' + JSON.parse(user.address).conversation.isGroup + ' area ' + area + ' flags ' + user.flags) : 'user not exists';
-            session.endDialogWithResult({ response: str });  
+            session.endDialog(str);   
         });       
                  
     },
