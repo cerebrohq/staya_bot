@@ -148,6 +148,13 @@ function testSendWork(type, bot, user)
                         .text("<http://jobs.staya.vc/job/115?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
                 msg1.channelData = ({unfurl_links:"true", unfurl_media:"true"});
                 bot.send(msg1);  
+            } else if (/^(str )/i.test(type)) {
+                type.substring(4, url.length);
+                var msg = new builder.Message()
+                        .address(user.address)
+                        .text(type);
+                msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
+                bot.send(msg);
             } else {
 
                 var msg2 = new builder.Message()
