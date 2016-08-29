@@ -180,28 +180,28 @@ function testSendWork(type, bot, user)
                 type = type.substring(4, url.length);
                 var msg = new builder.Message()
                         .address(user.address)
-                        .text("<http://www.youtube.com/watch?v=wq1R93UMqlk>");
+                        .text("<https://www.youtube.com/watch?v=GFt3nzvkTNM>");
                 msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
                 bot.send(msg);
             } else if (type == 'youtube2') {
                 type = type.substring(4, url.length);
                 var msg = new builder.Message()
                         .address(user.address)
-                        .text("http://www.youtube.com/watch?v=wq1R93UMqlk");
-                msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
+                        .text("https://www.youtube.com/watch?v=axSiV-fr_UA");
+                //msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
                 bot.send(msg);
             } else if (type == 'youtube3') {
                 type = type.substring(4, url.length);
                 var msg = new builder.Message()
                         .address(user.address)
-                        .text("https://jobs.cerebrohq.com/job/184");
+                        .text("https://www.youtube.com/watch?v=E-jDBXHJfZE");
                 msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
                 bot.send(msg);
             } else if (type == 'youtube4') {
                 type = type.substring(4, url.length);
                 var msg = new builder.Message()
                         .address(user.address)
-                        .text("<http://creativerussia.staya.vc/job/223>");
+                        .text("<http://creativerussia.staya.vc/job/43>");
                 msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
                 bot.send(msg);
             } else {
