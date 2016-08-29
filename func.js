@@ -141,8 +141,14 @@ function testSendWork(type, bot, user)
                 tagurlend = '>'
             }
            
-            if (type == 1)
-            {
+            if (/^(u)/i.test(type)) {
+                type = type.substring(1, url.length);
+                var msg = new builder.Message()
+                        .address(user.address)
+                        .text(type);
+                msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
+                bot.send(msg);
+            } else if (type == 1) {            
                 var msg1 = new builder.Message()
                         .address(user.address)
                         .text("<http://jobs.staya.vc/job/57?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
