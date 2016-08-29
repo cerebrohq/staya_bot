@@ -145,7 +145,7 @@ function testSendWork(type, bot, user)
                 type = type.substring(1, url.length);
                 var msg = new builder.Message()
                         .address(user.address)
-                        .text(type);
+                        .text('http://' + type);
                 msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
                 bot.send(msg);
             } else if (type == 1) {            
