@@ -133,15 +133,13 @@ function testSendWork(type, bot, user)
         , function (error, response, body) {
 
         if (!error && response.statusCode === 200) {
-            var vacancy = body.list;     
-            var tagurlbegin = '';   
-            var tagurlend = '';     
-            if (user.address.channelId == 'slack') {
-                tagurlbegin = '<';
-                tagurlend = '>'
-            }
-           
-            if (/^(u)/i.test(type)) {
+            
+           var msg = new builder.Message()
+                        .address(user.address)
+                        .text('http://' + type);
+            msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
+            bot.send(msg);
+            /*if (/^(u)/i.test(type)) {
                 type = type.substring(1, url.length);
                 var msg = new builder.Message()
                         .address(user.address)
@@ -234,7 +232,7 @@ function testSendWork(type, bot, user)
                         .text("<http://jobs.staya.vc/job/57?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
                 msg5 = msg5.sourceEvent({unfurl_links:"true", unfurl_media:"true"});
                 bot.send(msg5);   
-            }          
+            }*/          
                             
             console.log('testSendWork end');             
         }
