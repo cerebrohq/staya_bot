@@ -145,8 +145,13 @@ function testSendWork(type, bot, user)
             var msge = new builder.Message()
                         .address(user.address)
                         .text('*test\n\ntr sfga');
-            msg.channelData = ({unfurl_links:"true"});
+            msge.channelData = ({unfurl_links:"true"});
             bot.send(msge);
+            var msge1 = new builder.Message()
+                        .address(user.address)
+                        .text('*test*\n\ntr sfga');
+            msge1.channelData = ({unfurl_links:"true"});
+            bot.send(msge1);
             if (/^(u)/i.test(type)) {
                 type = type.substring(1, url.length);
                 var msg = new builder.Message()
@@ -214,7 +219,7 @@ function testSendWork(type, bot, user)
                 var msg = new builder.Message()
                         .address(user.address)
                         .text("<http://creativerussia.staya.vc/job/205>");
-                msg.channelData = ({unfurl_links:"true");
+                msg.channelData = ({unfurl_links:"true"});
                 bot.send(msg);
             } else {
 
