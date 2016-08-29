@@ -37,8 +37,10 @@ function doCommand(session, args)
             session.beginDialog('/adsetresource');  // hidden
         } else if (/^(aduser)/i.test(session.message.text)) {
             session.beginDialog('/aduser');  // hidden
+        } else if (/^(testSend)/i.test(session.message.text)) {
+            session.beginDialog('/testSend');  // hidden      
         } else if (/^(площадка)/i.test(session.message.text)) {
-            session.beginDialog('/setresource');  // hidden
+            session.beginDialog('/setresource');  
         } else if (/^(работа|сменить работу)/i.test(session.message.text)) {
             session.beginDialog('/changew');  
         } else if (/^(старт|начать)/i.test(session.message.text)) {

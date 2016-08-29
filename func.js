@@ -94,41 +94,7 @@ function sendWork(time, bot, user)
                 var str = strheader + strtext + strurl;
                 var msg = new builder.Message()
                             .address(user.address)
-                            .text(str);
-                                
-                if (user.address.user.name == 'ehtemka' && user.address.channelId == 'slack') {
-                    //msg.text(tagurlbegin + vacancy[i].url + '?utm_source=bot&utm_campaign=bot&utm_medium=' + user.address.channelId + tagurlend)
-                   //msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
-
-                    var msg1 = new builder.Message()
-                            .address(user.address)
-                            .text("<http://jobs.staya.vc/job/220?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
-                    msg1.channelData = ({unfurl_links:"true", unfurl_media:"true"});
-                    bot.send(msg1);  
-
-                    var msg2 = new builder.Message()
-                            .address(user.address)
-                            .text("xbfghnfg hfghg <http://jobs.staya.vc/job/219?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
-                    msg2.channelData = ({unfurl_links:"true", unfurl_media:"true"});
-                    bot.send(msg2); 
-
-                    var msg3 = new builder.Message()
-                            .address(user.address)
-                            .text("<https://jobs.staya.vc/job/220/?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
-                    msg3.channelData = ({unfurl_links:"true", unfurl_media:"true"});
-                    bot.send(msg3);  
-
-                    var msg4 = new builder.Message()
-                            .address(user.address)
-                            .text("dfhsdfgsf\n\n<https://jobs.staya.vc/job/217?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
-                    msg4.channelData = ({unfurl_links:"true", unfurl_media:"true"});
-                    bot.send(msg4); 
-                    var msg5 = new builder.Message()
-                            .address(user.address)
-                            .text("<http://jobs.staya.vc/job/218?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
-                    msg5 = msg5.sourceEvent({unfurl_links:"true", unfurl_media:"true"});
-                    bot.send(msg5);        
-                }
+                            .text(str);              
 
                 bot.send(msg); 
             }    
@@ -140,5 +106,81 @@ function sendWork(time, bot, user)
 };
 
 
+function testSendWork(type, bot, user)
+{    
+    console.log('testSendWork start');
+    var timeDate = new Date();
+    //timeDate.setTime(time - 5);
+    var utcDate = new Date(Date.UTC(timeDate.getFullYear(), timeDate.getMonth(), timeDate.getDate(), timeDate.getHours(), timeDate.getMinutes(), timeDate.getSeconds()));        
+    
+    var strtime = utcDate.toISOString();
+    strtime = strtime.replace('T', '%20');
+    strtime = strtime.replace(' ', '%20');
+    strtime = strtime.slice(0, -5);
+    console.log(strtime); 
+   var area = (user.area) ? user.area : 'http://jobs.staya.vc';
+    
+    var url =  area + '/api/jobs?limit=15&order_by=created_at&direction=desc&order_by=created_at&created_from=' + strtime + '&prof_areas=' + user.profs.join(',');
+
+    console.log('sendWork start', timeDate);  
+    console.log('sendWork start', url);  
+     
+    
+    request({
+        url: url,
+        json: true
+        }
+        , function (error, response, body) {
+
+        if (!error && response.statusCode === 200) {
+            var vacancy = body.list;     
+            var tagurlbegin = '';   
+            var tagurlend = '';     
+            if (user.address.channelId == 'slack') {
+                tagurlbegin = '<';
+                tagurlend = '>'
+            }
+           
+            if (type == 1)
+            {
+                var msg1 = new builder.Message()
+                        .address(user.address)
+                        .text("<http://jobs.staya.vc/job/115?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
+                msg1.channelData = ({unfurl_links:"true", unfurl_media:"true"});
+                bot.send(msg1);  
+            } else {
+
+                var msg2 = new builder.Message()
+                        .address(user.address)
+                        .text("xbfghnfg hfghg <http://jobs.staya.vc/job/116?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
+                msg2.channelData = ({unfurl_links:"true", unfurl_media:"true"});
+                bot.send(msg2); 
+
+                var msg3 = new builder.Message()
+                        .address(user.address)
+                        .text("<https://jobs.staya.vc/job/117/?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
+                msg3.channelData = ({unfurl_links:"true", unfurl_media:"true"});
+                bot.send(msg3);  
+
+                var msg4 = new builder.Message()
+                        .address(user.address)
+                        .text("dfhsdfgsf\n\n<https://jobs.staya.vc/job/118?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
+                msg4.channelData = ({unfurl_links:"true", unfurl_media:"true"});
+                bot.send(msg4); 
+                var msg5 = new builder.Message()
+                        .address(user.address)
+                        .text("<http://jobs.staya.vc/job/119?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
+                msg5 = msg5.sourceEvent({unfurl_links:"true", unfurl_media:"true"});
+                bot.send(msg5);   
+            }          
+                            
+            console.log('testSendWork end');             
+        }
+    });
+                
+};
+
+
 module.exports.changeWork = changeWork;
 module.exports.sendWork = sendWork;
+module.exports.testSendWork = testSendWork;

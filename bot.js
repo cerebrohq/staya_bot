@@ -291,6 +291,18 @@ bot.dialog('/adcount',  [
     }   
 ]);
 
+bot.dialog('/testSend',  [
+    function (session) {  
+        console.log('testSend 1');  
+        builder.Prompts.text(session, 'input id');              
+    },
+    function (session, results) { 
+        console.log('testSend 2');         
+        session.endDialog();   
+        query.testSendWork(results.response, bot, data.user(session.message));
+    }
+]);
+
 setInterval(function() {
                 users = data.users();                
                 for (var id in users) {
