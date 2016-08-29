@@ -144,12 +144,12 @@ function testSendWork(type, bot, user)
 
             var msge = new builder.Message()
                         .address(user.address)
-                        .text('*test\n\ntr sfga');
+                        .text("*test\n\ntr sfga");
             msge.channelData = ({unfurl_links:"true"});
             bot.send(msge);
             var msge1 = new builder.Message()
                         .address(user.address)
-                        .text('*test*\n\ntr sfga');
+                        .text("*test*\n\ntr *sfga*");
             msge1.channelData = ({unfurl_links:"true"});
             bot.send(msge1);
             if (/^(u)/i.test(type)) {
@@ -225,7 +225,7 @@ function testSendWork(type, bot, user)
 
                 var msg2 = new builder.Message()
                         .address(user.address)
-                        .text("xbfghnfg hfghg <http://jobs.staya.vc/job/54?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
+                        .text("xbfghnfg hfghg http://creativerussia.staya.vc/job/205");
                 msg2.channelData = ({unfurl_links:"true"});
                 bot.send(msg2); 
 
@@ -242,7 +242,7 @@ function testSendWork(type, bot, user)
                 bot.send(msg4); 
                 var msg5 = new builder.Message()
                         .address(user.address)
-                        .text("<http://jobs.staya.vc/job/57?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
+                        .text("<http://creativerussia.staya.vc/job/205>");
                 msg5 = msg5.sourceEvent({"unfurl_media":true});
                 bot.send(msg5);   
             }          
