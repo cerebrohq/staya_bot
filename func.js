@@ -194,7 +194,14 @@ function testSendWork(type, bot, user)
                 type = type.substring(4, url.length);
                 var msg = new builder.Message()
                         .address(user.address)
-                        .text("<http://creativerussia.staya.vc/job/221>");
+                        .text("https://jobs.cerebrohq.com/job/184");
+                msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
+                bot.send(msg);
+            } else if (type == 'youtube4') {
+                type = type.substring(4, url.length);
+                var msg = new builder.Message()
+                        .address(user.address)
+                        .text("<http://creativerussia.staya.vc/job/223>");
                 msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
                 bot.send(msg);
             } else {
