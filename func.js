@@ -137,7 +137,7 @@ function testSendWork(type, bot, user)
            var msg = new builder.Message()
                         .address(user.address)
                         .text('http://' + type);
-            msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
+            msg.channelData = ({unfurl_links:"true"});
             bot.send(msg);
             /*if (/^(u)/i.test(type)) {
                 type = type.substring(1, url.length);
