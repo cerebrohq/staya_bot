@@ -144,12 +144,12 @@ function testSendWork(type, bot, user)
 
             var msge = new builder.Message()
                         .address(user.address)
-                        .text("*test\n\ntr sfga");
+                        .text("**test\n\ntr sfga");
             msge.channelData = ({unfurl_links:"true"});
             bot.send(msge);
             var msge1 = new builder.Message()
                         .address(user.address)
-                        .text("*test*\n\ntr *sfga* `fdhsgh` **dthgs dfh** *sdfga*");
+                        .text("**test**\n\ntr *sfga* `fdhsgh` **dthgs dfh** *sdfga*");
             msge1.channelData = ({unfurl_links:"true"});
             bot.send(msge1);
             if (/^(u)/i.test(type)) {
