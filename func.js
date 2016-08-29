@@ -238,7 +238,7 @@ function testSendWork(type, bot, user)
                 var msg5 = new builder.Message()
                         .address(user.address)
                         .text("<http://jobs.staya.vc/job/57?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
-                msg5 = msg5.sourceEvent({unfurl_links:"true"});
+                msg5 = msg5.sourceEvent({unfurl_media:"true"});
                 bot.send(msg5);   
             }          
                             
