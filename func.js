@@ -145,28 +145,28 @@ function testSendWork(type, bot, user)
             {
                 var msg1 = new builder.Message()
                         .address(user.address)
-                        .text("<http://jobs.staya.vc/job/50?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
+                        .text("<http://jobs.staya.vc/job/57?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
                 msg1.channelData = ({unfurl_links:"true", unfurl_media:"true"});
                 bot.send(msg1);  
             } else if (type == 2) {
                 type = type.substring(4, url.length);
                 var msg = new builder.Message()
                         .address(user.address)
-                        .text('http://jobs.staya.vc/job/51?utm_source=bot&utm_campaign=bot&utm_medium=slack');
+                        .text('http://jobs.staya.vc/job/58?utm_source=bot&utm_campaign=bot&utm_medium=slack');
                 msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
                 bot.send(msg);
             } else if (type == 3) {
                 type = type.substring(4, url.length);
                 var msg = new builder.Message()
                         .address(user.address)
-                        .text("<http://jobs.staya.vc/job/52?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
+                        .text("<http://jobs.staya.vc/job/59?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
                 msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
                 bot.send(msg);
             } else if (type == 4) {
                 type = type.substring(4, url.length);
                 var msg = new builder.Message()
                         .address(user.address)
-                        .text("http://jobs.staya.vc/job/53?utm_source=bot&utm_campaign=bot&utm_medium=slack");
+                        .text("http://jobs.staya.vc/job/60?utm_source=bot&utm_campaign=bot&utm_medium=slack");
                 msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
                 bot.send(msg);
             } else if (/^(str )/i.test(type)) {
@@ -174,6 +174,27 @@ function testSendWork(type, bot, user)
                 var msg = new builder.Message()
                         .address(user.address)
                         .text(type);
+                msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
+                bot.send(msg);
+            } else if (type == 'youtube1') {
+                type = type.substring(4, url.length);
+                var msg = new builder.Message()
+                        .address(user.address)
+                        .text("<http://www.youtube.com/watch?v=wq1R93UMqlk>");
+                msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
+                bot.send(msg);
+            } else if (type == 'youtube2') {
+                type = type.substring(4, url.length);
+                var msg = new builder.Message()
+                        .address(user.address)
+                        .text("http://www.youtube.com/watch?v=wq1R93UMqlk");
+                msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
+                bot.send(msg);
+            } else if (type == 'youtube3') {
+                type = type.substring(4, url.length);
+                var msg = new builder.Message()
+                        .address(user.address)
+                        .text("<http://creativerussia.staya.vc/job/221>");
                 msg.channelData = ({unfurl_links:"true", unfurl_media:"true"});
                 bot.send(msg);
             } else {
