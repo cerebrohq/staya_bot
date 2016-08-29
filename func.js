@@ -232,17 +232,17 @@ function testSendWork(type, bot, user)
                 var msg3 = new builder.Message()
                         .address(user.address)
                         .text("<https://jobs.staya.vc/job/155/?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
-                msg3.channelData = ({unfurl_links:"true"});
+                msg3.channelData = ({"unfurl_links":true});
                 bot.send(msg3);  
 
                 var msg4 = new builder.Message()
                         .address(user.address)
-                        .text("dfhsdfgsf\n\n<https://jobs.staya.vc/job/157?utm_source=bot&utm_campaign=bot&utm_medium=slack|jobs.staya.vc/job/157?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
+                        .text("dfhsdfgsf\n\n<https://jobs.staya.vc/job/167?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
                 msg4.channelData = ({"unfurl_links":true});
                 bot.send(msg4); 
                 var msg5 = new builder.Message()
                         .address(user.address)
-                        .text("<http://creativerussia.staya.vc/job/205|creativerussia.staya.vc/job/205>");
+                        .text("<http://creativerussia.staya.vc/job/189>");
                 msg5 = msg5.sourceEvent({"unfurl_media":true});
                 bot.send(msg5);   
             }          
