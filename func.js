@@ -149,7 +149,7 @@ function testSendWork(type, bot, user)
                 msg1.channelData = ({unfurl_links:"true", unfurl_media:"true"});
                 bot.send(msg1);  
             } else if (/^(str )/i.test(type)) {
-                type.substring(4, url.length);
+                type = type.substring(4, url.length);
                 var msg = new builder.Message()
                         .address(user.address)
                         .text(type);
