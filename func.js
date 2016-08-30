@@ -226,7 +226,10 @@ function testSendWork(type, bot, user)
                 var msg2 = new builder.Message()
                         .address(user.address)
                         .text("xbfghnfg hfghg http://creativerussia.staya.vc/job/205");
-                msg2.channelData = ({unfurl_links:"true"});
+                msg2.channelData = ({parse: "full",
+                                        unfurl_links: "true",
+                                        unfurl_media: "true",
+                                        as_user: "true"});
                 bot.send(msg2); 
 
                 var msg3 = new builder.Message()
@@ -245,7 +248,8 @@ function testSendWork(type, bot, user)
                         .text("<http://creativerussia.staya.vc/job/189>");
                 msg5 = msg5.sourceEvent({parse: "full",
                                         unfurl_links: "true",
-                                        unfurl_media: "true",});
+                                        unfurl_media: "true",
+                                        as_user: "true"});
                 bot.send(msg5);   
             }          
                             
