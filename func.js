@@ -74,10 +74,10 @@ function sendWork(time, bot, user)
             var vacancy = body.list;     
             var tagurlbegin = '';   
             var tagurlend = '';     
-            if (user.address.channelId == 'slack') {
+            /*if (user.address.channelId == 'slack') {
                 tagurlbegin = '<';
                 tagurlend = '>'
-            }
+            }*/
             for (var i = 0; i < vacancy.length; i++) { 
                 var strheader = '';
                 if (user.address.channelId == 'slack') {
