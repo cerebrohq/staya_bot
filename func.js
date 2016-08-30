@@ -98,7 +98,11 @@ function sendWork(time, bot, user)
                 var str = strheader + strtext + strurl;
                 var msg = new builder.Message()
                             .address(user.address)
-                            .text(str);              
+                            .text(str); 
+
+                if (user.address.channelId == 'slack') {
+                    msg.channelData = ({parse: "full", unfurl_links:"true", unfurl_media:"true"});
+                }             
 
                 bot.send(msg); 
             }    
