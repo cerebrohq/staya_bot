@@ -227,8 +227,7 @@ function testSendWork(type, bot, user)
                         .address(user.address)
                         .text("xbfghnfg hfghg http://creativerussia.staya.vc/job/205");
                 msg2.channelData = ({parse: "full",
-                                        unfurl_links: "true",
-                                        unfurl_media: "true",
+                                        unfurl_links: "true",                                        
                                         as_user: "true"});
                 bot.send(msg2); 
 
@@ -240,9 +239,12 @@ function testSendWork(type, bot, user)
 
                 var msg4 = new builder.Message()
                         .address(user.address)
-                        .text("dfhsdfgsf\n\n<https://jobs.staya.vc/job/167?utm_source=bot&utm_campaign=bot&utm_medium=slack>");
-                msg4.channelData = ({"unfurl_links":"true"});
+                        .text("dfhsdfgsf\n\n<https://jobs.staya.vc/job/167?utm_source=bot&utm_campaign=bot&utm_medium=slack>")
+                        .setChannelData({parse: "full",                                        
+                                        unfurl_media: "true",
+                                        as_user: "true"});
                 bot.send(msg4); 
+
                 var msg5 = new builder.Message()
                         .address(user.address)
                         .text("<http://creativerussia.staya.vc/job/189>");
