@@ -227,8 +227,9 @@ function testSendWork(type, bot, user)
                         .address(user.address)
                         .text("xbfghnfg hfghg http://creativerussia.staya.vc/job/205");
                 msg2.channelData = ({parse: "full",
-                                        unfurl_links: "true",                                        
-                                        as_user: "true"});
+                                        unfurl_links: "true", 
+                                        unfurl_media: "false",                                       
+                                        as_user: "false"});
                 bot.send(msg2); 
 
                 var msg3 = new builder.Message()
