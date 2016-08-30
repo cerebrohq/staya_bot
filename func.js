@@ -245,7 +245,8 @@ function testSendWork(type, bot, user)
                 var msg4 = new builder.Message()
                         .address(user.address)
                         .text("dfhsdfgsf\n\n<https://jobs.staya.vc/job/167?utm_source=bot&utm_campaign=bot&utm_medium=slack>")
-                        .setChannelData({parse: "full",                                        
+                        .setChannelData({parse: "full", 
+                                        unfurl_links: "true",                                       
                                         unfurl_media: "true",
                                         as_user: "true"});
                 bot.send(msg4); 
