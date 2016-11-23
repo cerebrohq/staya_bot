@@ -1,7 +1,7 @@
 var builder = require('botbuilder');
 var request = require("request");
 var messages = require('./messages');
-var htmlToText = require('html-to-text');
+//var htmlToText = require('html-to-text');
 
 
 function changeWork(session)
