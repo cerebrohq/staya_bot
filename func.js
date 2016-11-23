@@ -1,6 +1,7 @@
 var builder = require('botbuilder');
-var request = require("request")
+var request = require("request");
 var messages = require('./messages');
+var htmlToText = require('html-to-text');
 
 
 function changeWork(session)
@@ -145,10 +146,14 @@ function testSendWork(type, bot, user)
                         .text('http://' + type);
             msg.channelData = ({unfurl_links:"true"});
             bot.send(msg);*/
+			
+			var textplain = htmlToText.fromString('3D Environment Artist<span style="margin-right:0.3em;"> </span><span style="margin-left:-0.3em;">(</span>Mobile RPG) Компания Plarium приглашает 3D Environment Artist в&nbsp;команду Mobile Games, которая раб...', {
+												wordwrap: 130
+											});			
 
             var msge = new builder.Message()
                         .address(user.address)
-                        .text("**test\n\ntr sfga");
+                        .text(textplain);
             msge.channelData = ({unfurl_links:"true"});
             bot.send(msge);
             var msge1 = new builder.Message()
