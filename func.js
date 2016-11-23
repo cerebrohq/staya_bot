@@ -81,12 +81,14 @@ function sendWork(time, bot, user)
             }*/
             for (var i = 0; i < vacancy.length; i++) { 
                 var strheader = '';
+				var topic = htmlToText.fromString(vacancy[i].topic, {wordwrap: 130});
                 if (user.address.channelId == 'slack') {
-                    strheader = '**' + vacancy[i].topic + '**\n\n';
+                    strheader = '**' + topic + '**\n\n';
                 } else {
-                    strheader = '###' + vacancy[i].topic + '\n\n';
+                    strheader = '###' + topic + '\n\n';
                 }
-                var strtext = vacancy[i].description_short;
+                var description = htmlToText.fromString(vacancy[i].description_short, {wordwrap: 130});                
+				var strtext = description;
                 
                 var strurl = '\n\n' + tagurlbegin + vacancy[i].url + '?utm_source=bot&utm_campaign=bot&utm_medium=' + user.address.channelId + tagurlend; 
                 
