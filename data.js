@@ -87,7 +87,7 @@ function setProfsDb(id, profs)
             trace.log('setProfsDb error', id, err);
         } else {
             trace.log('setProfsDb exists', id, row.count);
-           if(row.count > 0) {
+           if(row.count > 0) {               
                 var stm = db.prepare('update users set profs=? where id = ?');
                 stm.run(JSON.stringify(profs), id);
                 stm.finalize();

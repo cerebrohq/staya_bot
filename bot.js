@@ -3,7 +3,7 @@ var messages = require('./messages');
 var data = require('./data');
 var dcommand = require('./dialog');
 var query = require('./func');
-
+var trace = require('./trace');
 
 var connector = new builder.ChatConnector({
     appId: process.env.MICROSOFT_APP_ID,
@@ -15,6 +15,15 @@ var bot = new builder.UniversalBot(connector);
 bot.dialog('/', dcommand);
 
 module.exports.connector = connector;
+
+
+bot.on('contactRelationUpdate', function (message) {
+    console.log('contactRelationUpdate', message);   
+     if (message.action === 'remove') {
+         data.removeUser(message);
+     }    
+});
+
 
 bot.dialog('/changew',  [
     function (session) { 
@@ -39,11 +48,11 @@ bot.dialog('/changewResult',  [
         } else if (results.response && session.userData.profession_list)  {
             var profs = results.response.split(/\D+/);          
             for (var i = 0; i < profs.length; i++) {
-                var id = Number(profs[i]);
+                var id = Number(profs[i]);               
                 if (id && id > 0) {
-                    profIds[profIds.length] = session.userData.profession_list[id-1].id;   
+                    profIds[profIds.length] = session.userData.profession_list[id-1].id;                    
                 }                       
-            }
+            }           
 
             if (profIds.length > 0) {
                 data.setProfs(session.message, profIds);            
@@ -51,10 +60,13 @@ bot.dialog('/changewResult',  [
 
             if (profIds.length > 0) {
                 session.endDialog(messages.goоdMessage);                
-                var timeDate = new Date();           
-                data.setTimeSend(session.message, timeDate.getTime());                
+                /*var timeDate = new Date();           
+                data.setTimeSend(session.message, timeDate.getTime());               
                 timeDate.setDate(timeDate.getDate() - 3);
-                query.sendWork(timeDate.getTime(), bot, data.user(session.message));
+                query.__s_endWork(timeDate.getTime(), bot, data.user(session.message));*/
+                var users = {};
+                users[data.userId(session.message)] = data.user(session.message);
+                query.sendWork(bot, users, 4320);                
             } else {
                 session.endDialog(messages.badMessage); 
             }                       
@@ -73,10 +85,13 @@ bot.dialog('/start',  [
             session.beginDialog('/changew');
         } else {
             session.endDialog(messages.goоdMessage); 
-            var timeDate = new Date();           
+            /*var timeDate = new Date();           
             data.setTimeSend(session.message, timeDate.getTime());                
             timeDate.setDate(timeDate.getDate() - 3);
-            query.sendWork(timeDate.getTime(), bot, data.user(session.message));                          
+            query.__s_endWork(timeDate.getTime(), bot, data.user(session.message)); */
+            var users = {};
+            users[data.userId(session.message)] = data.user(session.message);
+            query.sendWork(bot, users, 4320);                         
         }        
     },
     function (session, results) {        
@@ -304,8 +319,9 @@ bot.dialog('/testSend',  [
 ]);
 
 setInterval(function() {
-                users = data.users();                
-                for (var id in users) {
+                users = data.users(); 
+                query.sendWork(bot, users);               
+                /*for (var id in users) {
                     var user = users[id];
                     if (user && user.time && user.profs) {
                         var newtime = new Date().getTime();
@@ -313,10 +329,10 @@ setInterval(function() {
                             var sendtime = user.time; 
                             users[id].time = newtime;
                             data.setTimeSendDb(id, newtime);    
-                            query.sendWork(sendtime, bot, user);
+                            query.__s_endWork(sendtime, bot, user);
                         }
                     }   
-                }
+                }*/
                 
         }, 600000);   
 
