@@ -83,7 +83,9 @@ function sendWorkToUsers(bot, allusers, ago_minutes)
             
             var param = (from_ago_minutes)?'?from_ago_minutes=' + from_ago_minutes:'';
             var url =  address + '/api/jobs_for_bot/10/' + param;
+            
             trace.log('request url', url);  
+
             request({
             url: url,
             json: true
