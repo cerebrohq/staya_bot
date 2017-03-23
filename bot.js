@@ -20,6 +20,7 @@ module.exports.connector = connector;
 bot.on('contactRelationUpdate', function (message) {
     console.log('contactRelationUpdate', message);   
      if (message.action === 'remove') {
+         console.log('remove bot');
          data.removeUser(message);
      }    
 });
