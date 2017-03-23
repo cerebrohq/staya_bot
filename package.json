@@ -12,6 +12,6 @@
     "botbuilder": "3.1.0",
     "request": "",
     "restify": "",
-    "sqlite3": "^3.1.4"
+    "sqlite3": "^3.1.8"
   }
 }
