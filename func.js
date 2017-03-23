@@ -62,7 +62,7 @@ function hasProf(user_profs, vacancy_profs)
 
 function sendWorkToUsers(bot, allusers, ago_minutes)
 {    
-    console.log('sendWorkToUsers start', new Date(), 'ago', ago_minutes);    
+    trace.log('sendWorkToUsers start', new Date(), 'ago', ago_minutes);    
     
      var areas = {};    
      for (var id in allusers) {
@@ -83,13 +83,13 @@ function sendWorkToUsers(bot, allusers, ago_minutes)
             
             var param = (from_ago_minutes)?'?from_ago_minutes=' + from_ago_minutes:'';
             var url =  address + '/api/jobs_for_bot/10/' + param;
-            console.log('request url', url);  
+            trace.log('request url', url);  
             request({
             url: url,
             json: true
             }
             , function (error, response, body) {
-                console.log('response url', response.statusCode); 
+                trace.log('response url', response.statusCode); 
                 if (!error && response.statusCode === 200) {
                     var vacancy = body.list;     
                     var tagurlbegin = '';   
@@ -106,8 +106,7 @@ function sendWorkToUsers(bot, allusers, ago_minutes)
                                     trace.log('more 15 vacancies to break');
                                     break;
                                 }                               
-                                trace.log(vacancy[i].prof_areas);
-                                
+
                                 var strheader = '';
                                 var topic = htmlToText.fromString(vacancy[i].topic, {wordwrap: 130});
                                 if (areaUser.address.channelId == 'slack') {
@@ -140,7 +139,7 @@ function sendWorkToUsers(bot, allusers, ago_minutes)
                         }
                     }    
                                     
-                    console.log('sendWorkToUsers end', new Date());             
+                    trace.log('sendWorkToUsers end', new Date());             
                 }
             });
         };
