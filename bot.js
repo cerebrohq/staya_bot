@@ -61,10 +61,10 @@ bot.dialog('/changewResult',  [
 
             if (profIds.length > 0) {
                 session.endDialog(messages.goоdMessage);                
-                /*var timeDate = new Date();           
+                var timeDate = new Date();           
                 data.setTimeSend(session.message, timeDate.getTime());               
-                timeDate.setDate(timeDate.getDate() - 3);
-                query.__s_endWork(timeDate.getTime(), bot, data.user(session.message));*/
+                //timeDate.setDate(timeDate.getDate() - 3);
+                //query.__s_endWork(timeDate.getTime(), bot, data.user(session.message));*/
                 var users = {};
                 users[data.userId(session.message)] = data.user(session.message);
                 query.sendWork(bot, users, 4320);                
@@ -86,10 +86,10 @@ bot.dialog('/start',  [
             session.beginDialog('/changew');
         } else {
             session.endDialog(messages.goоdMessage); 
-            /*var timeDate = new Date();           
+            var timeDate = new Date();           
             data.setTimeSend(session.message, timeDate.getTime());                
-            timeDate.setDate(timeDate.getDate() - 3);
-            query.__s_endWork(timeDate.getTime(), bot, data.user(session.message)); */
+            //timeDate.setDate(timeDate.getDate() - 3);
+            //query.__s_endWork(timeDate.getTime(), bot, data.user(session.message)); */
             var users = {};
             users[data.userId(session.message)] = data.user(session.message);
             query.sendWork(bot, users, 4320);                         
@@ -335,7 +335,7 @@ setInterval(function() {
                     }   
                 }*/
                 
-        }, 600000);   
+        }, 600000);  // 
 
 
 

@@ -67,7 +67,7 @@ function sendWorkToUsers(bot, allusers, ago_minutes)
      var areas = {};    
      for (var id in allusers) {
         var user = allusers[id];
-       if (user && user.profs) {  
+       if (user && user.profs && user.time) {  
             var address = (user.area) ? user.area : 'http://jobs.staya.vc';                        
             if (!areas[address]) {            
                 areas[address] = {};
