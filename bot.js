@@ -61,10 +61,7 @@ bot.dialog('/changewResult',  [
 
             if (profIds.length > 0) {
                 session.endDialog(messages.goоdMessage);                
-                var timeDate = new Date();           
-                data.setTimeSend(session.message, timeDate.getTime());               
-                //timeDate.setDate(timeDate.getDate() - 3);
-                //query.__s_endWork(timeDate.getTime(), bot, data.user(session.message));*/
+                data.setDoNotSend(session.message, false);               
                 var users = {};
                 users[data.userId(session.message)] = data.user(session.message);
                 query.sendWork(bot, users, 4320);                
@@ -86,10 +83,7 @@ bot.dialog('/start',  [
             session.beginDialog('/changew');
         } else {
             session.endDialog(messages.goоdMessage); 
-            var timeDate = new Date();           
-            data.setTimeSend(session.message, timeDate.getTime());                
-            //timeDate.setDate(timeDate.getDate() - 3);
-            //query.__s_endWork(timeDate.getTime(), bot, data.user(session.message)); */
+            data.setDoNotSend(session.message, false);                
             var users = {};
             users[data.userId(session.message)] = data.user(session.message);
             query.sendWork(bot, users, 4320);                         
@@ -102,7 +96,7 @@ bot.dialog('/start',  [
 
 bot.dialog('/stop',  [
     function (session) {  
-        data.setTimeSend(session.message, null);  
+        data.setDoNotSend(session.message, true);  
         session.send(messages.shutdownMessage);
         session.endDialog();          
     },
@@ -321,20 +315,7 @@ bot.dialog('/testSend',  [
 
 setInterval(function() {
                 users = data.users(); 
-                query.sendWork(bot, users);               
-                /*for (var id in users) {
-                    var user = users[id];
-                    if (user && user.time && user.profs) {
-                        var newtime = new Date().getTime();
-                        if ((newtime - user.time) >= 600000) {
-                            var sendtime = user.time; 
-                            users[id].time = newtime;
-                            data.setTimeSendDb(id, newtime);    
-                            query.__s_endWork(sendtime, bot, user);
-                        }
-                    }   
-                }*/
-                
+                query.sendWork(bot, users);             
         }, 600000);  // 
 
 

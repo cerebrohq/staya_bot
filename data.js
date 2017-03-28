@@ -96,24 +96,6 @@ function setProfsDb(id, profs)
    });
 };
 
-
-function setTimeSendDb(id, time)
-{ 
-    var db = sql.db(); 
-    db.get('select count(*) as count from users where id = ?', id, function (err, row) {
-        if (err) {
-            trace.log('setTimeSendDb error', id, err);
-        } else {
-            trace.log('setTimeSendDb exists', id, row.count);
-           if(row.count > 0) {
-                var stm = db.prepare('update users set time=? where id = ?');
-                stm.run(time, id);
-                stm.finalize();
-            } 
-        }
-    });
-};
-
 function setAreaDb(id, area, callback)
 {
     var db = sql.db();
@@ -206,17 +188,6 @@ function setProfs(message, profs)
     } 
 };
 
-function setTimeSend(message, time)
-{  
-    var id = userId(message);   
-    if (id)  { 
-        setTimeSendDb(id, time);
-        trace.log('setTimeSend befor', id, listUsers[id] != undefined)
-        listUsers[id].time = time;
-        trace.log('setTimeSend after', listUsers[id] != undefined)  
-    }
-};
-
 function hasFlag(flags, bit)
 {
 	return ((flags & (1 << bit))!=0);
@@ -239,6 +210,21 @@ function setDoNotListen(message, direct)
         trace.log('setDoNotListen befor', id, listUsers[id] != undefined)        
         listUsers[id].flags = flags;
         trace.log('setDoNotListen after', listUsers[id] != undefined)  
+    }
+};
+
+function setDoNotSend(message, direct)
+{  
+    var id = userId(message);   
+    if (id)  { 
+        var flags = (listUsers[id].flags) ? listUsers[id].flags : 0;
+        trace.log('setDoNotSend befor', flags)
+        flags = setFlag(direct, ((flags) ? flags : 0), 2);
+        trace.log('setDoNotSend after', flags)
+        setFlagsDb(id, flags);
+        trace.log('setDoNotSend befor', id, listUsers[id] != undefined)        
+        listUsers[id].flags = flags;
+        trace.log('setDoNotSend after', listUsers[id] != undefined)  
     }
 };
 
@@ -269,6 +255,14 @@ function isListen(message)
     return true;
 }
 
+function isSended(id)
+{
+    if (id && listUsers[id].flags)  {                
+        return !hasFlag(listUsers[id].flags, 2); 
+    }
+    return true;
+}
+
 function users()
 { 
     return listUsers;
@@ -280,14 +274,14 @@ module.exports.getUserDb = getUserDb;
 module.exports.getSizeDb = getSizeDb;
 module.exports.setAreaDb = setAreaDb;
 module.exports.removeUserDb = removeUserDb;
-module.exports.setTimeSendDb = setTimeSendDb;
 module.exports.setArea = setArea;
 module.exports.addUser = addUser;
 module.exports.removeUser = removeUser;
 module.exports.setProfs = setProfs;
-module.exports.setTimeSend = setTimeSend;
+module.exports.setDoNotSend = setDoNotSend;
 module.exports.setDoNotListen = setDoNotListen;
 module.exports.isListen = isListen;
+module.exports.isSended = isSended;
 module.exports.user = user;
 module.exports.users = users;
 module.exports.userId = userId;

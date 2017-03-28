@@ -3,6 +3,7 @@ var request = require("request");
 var messages = require('./messages');
 var htmlToText = require('html-to-text');
 var trace = require('./trace');
+var data = require('./data');
 
 function changeWork(session)
 {   
@@ -66,8 +67,8 @@ function sendWorkToUsers(bot, allusers, ago_minutes)
     
      var areas = {};    
      for (var id in allusers) {
-        var user = allusers[id];
-       if (user && user.profs && user.time) {  
+        var user = allusers[id];        
+       if (user && user.profs && data.isSended(id)) {  
             var address = (user.area) ? user.area : 'http://jobs.staya.vc';                        
             if (!areas[address]) {            
                 areas[address] = {};

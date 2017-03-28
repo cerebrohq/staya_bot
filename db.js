@@ -21,6 +21,7 @@ function initDb(listUsers) {
             flags INTEGER:
             b0 - deleted?
             b1 - do not listen commands
+            b2 - do not send
             */
         } else {
             newdb.all('pragma table_info(users)', function (err, rows) {
