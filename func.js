@@ -99,8 +99,10 @@ function sendWorkToUsers(bot, allusers, ago_minutes)
                     var tagurlend = '';     
                     
                     for (var u = 0; u < users.length; u++) {                        
-
                         var areaUser = users[u];                        
+                        //console.log('response to user', areaUser); 
+                        //console.log('response url', url); 
+                        //console.log('vacancy', vacancy.length); 
                         for (var i = 0; i < vacancy.length; i++) { 
 
                             if (hasProf(areaUser.profs, vacancy[i].prof_areas)) {
