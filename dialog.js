@@ -21,35 +21,36 @@ dcommand.matches('/^(отменить|потом)/i', builder.DialogAction.endDi
 function doCommand(session, args)
 {
     if (data.isListen(session.message)) {
-        if (/^(stayabot не слушай|ыефнфище не слушай|стаябот не слушай|stayabot yt ckeifq)/i.test(session.message.text)) {
+        console.log(session.message.text)
+        if (/^(stayabot не слушай|ыефнфище не слушай|стаябот не слушай|stayabot yt ckeifq|\/stayabot не слушай)/i.test(session.message.text)) {
             session.beginDialog('/stopListen'); 
-        } else if (/^(stayabot слушай|ыефнфище слушай|стаябот слушай|stayabot ckeifq)/i.test(session.message.text)) {
+        } else if (/^(stayabot слушай|ыефнфище слушай|стаябот слушай|stayabot ckeifq|\/stayabot слушай)/i.test(session.message.text)) {
             session.beginDialog('/startListen');
-        } else if (/^(adtest)/i.test(session.message.text)) {
+        } else if (/^(adtest|\/adtest)/i.test(session.message.text)) {
             session.beginDialog('/test');  // hidden
-        } else if (/^(adquery)/i.test(session.message.text)) {
+        } else if (/^(adquery|\/adquery)/i.test(session.message.text)) {
             session.beginDialog('/adquery');  // hidden    
-        } else if (/^(adcount)/i.test(session.message.text)) {
+        } else if (/^(adcount|\/adcount)/i.test(session.message.text)) {
             session.beginDialog('/adcount');  // hidden
-        } else if (/^(addelete)/i.test(session.message.text)) {
+        } else if (/^(addelete|\/addelete)/i.test(session.message.text)) {
             session.beginDialog('/addelete');  // hidden
-        } else if (/^(adsetresource)/i.test(session.message.text)) {
+        } else if (/^(adsetresource|\/adsetresource)/i.test(session.message.text)) {
             session.beginDialog('/adsetresource');  // hidden
-        } else if (/^(aduser)/i.test(session.message.text)) {
+        } else if (/^(aduser|\/aduser)/i.test(session.message.text)) {
             session.beginDialog('/aduser');  // hidden
-        } else if (/^(testSend)/i.test(session.message.text)) {
+        } else if (/^(testSend|\/testSend)/i.test(session.message.text)) {
             session.beginDialog('/testSend');  // hidden      
-        } else if (/^(площадка)/i.test(session.message.text)) {
+        } else if (/^(площадка|\/площадка)/i.test(session.message.text)) {
             session.beginDialog('/setresource');  
-        } else if (/^(работа|сменить работу)/i.test(session.message.text)) {
+        } else if (/^(работа|сменить работу|\/работа)/i.test(session.message.text)) {
             session.beginDialog('/changew');  
-        } else if (/^(старт|начать)/i.test(session.message.text)) {
+        } else if (/^(старт|начать|\/старт)/i.test(session.message.text)) {
             session.beginDialog('/start');  
-        } else if (/^(стоп|прекратить)/i.test(session.message.text)) {
+        } else if (/^(стоп|прекратить|\/стоп)/i.test(session.message.text)) {
             session.beginDialog('/stop');  
-        } else if (/^(миша|заново)/i.test(session.message.text)) {
+        } else if (/^(миша|заново|\/миша)/i.test(session.message.text)) {
             session.beginDialog('/restartNew');  
-        } else if (/^(помощь|help)/i.test(session.message.text)) {
+        } else if (/^(помощь|help|\/помощь)/i.test(session.message.text)) {
             session.send(messages.helpMessage);
         } else {
             session.send(messages.helloText);  
