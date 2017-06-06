@@ -121,8 +121,11 @@ function sendWorkToUsers(bot, allusers, ago_minutes)
                                 }
                                 var description = htmlToText.fromString(vacancy[i].description_short, {wordwrap: 130});                
                                 var strtext = description;
+                                var domen = '';
+                                if (vacancy[i].url.startsWith('/'))
+                                     domen = (areaUser.area) ? areaUser.area : 'http://jobs.staya.vc';
                                 
-                                var strurl = '\n\n' + tagurlbegin + vacancy[i].url + '?utm_source=bot&utm_campaign=bot&utm_medium=' + areaUser.address.channelId + tagurlend; 
+                                var strurl = '\n\n' + tagurlbegin + domen + vacancy[i].url + '?utm_source=bot&utm_campaign=bot&utm_medium=' + areaUser.address.channelId + tagurlend; 
                                 
                                 // for fucking facebook messager
                                 var sizeadd = strheader.length + strurl.length + 3; // 3 for ### endind header in facebook
