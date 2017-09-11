@@ -1,5 +1,5 @@
 
-var DEBUG_MODE = false;
+var DEBUG_MODE = true;
 
 function log()
 {
