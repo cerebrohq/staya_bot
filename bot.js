@@ -6,10 +6,12 @@ var query = require('./func');
 var trace = require('./trace');
 
 var connector = new builder.ChatConnector({
-    appId: 5c9489ee-c5bc-4bc9-8f8b-879fd2998f71,//process.env.MICROSOFT_APP_ID,
-    appPassword: 9ogUpVe5sP5x084Eu0wcgdF//process.env.MICROSOFT_APP_PASSWORD
+    appId: "5c9489ee-c5bc-4bc9-8f8b-879fd2998f71",
+    appPassword: "9ogUpVe5sP5x084Eu0wcgdF"
 });
 
+//process.env.MICROSOFT_APP_ID,
+//process.env.MICROSOFT_APP_PASSWORD
 
 var bot = new builder.UniversalBot(connector); 
 bot.dialog('/', dcommand);
