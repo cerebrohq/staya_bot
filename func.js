@@ -92,8 +92,8 @@ function sendWorkToUsers(bot, allusers, ago_minutes)
             json: true
             }
             , function (error, response, body) {
-                trace.log('response url', response.statusCode); 
-                if (!error && response.statusCode === 200) {
+                //trace.log('response url', response.statusCode); 
+                if (!error) { // && response.statusCode === 200
                     var vacancy = body.list;     
                     var tagurlbegin = '';   
                     var tagurlend = '';     
