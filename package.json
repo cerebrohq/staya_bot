@@ -12,7 +12,7 @@
     "botbuilder": "^3.9.1",
     "request": "",
     "restify": "",
-    "sqlite3": "^3.1.8"
+    "sqlite3": "^3.2.0"
   },
   "engines": {
     "node": "7.7.0",
