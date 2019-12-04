@@ -1,12 +1,12 @@
 {
   "name": "staya_bot",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "staya bot",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Cinesoft",
+  "author": "Cerebro",
   "license": "ISC",
   "dependencies": {
     "botbuilder": "^3.9.1",
@@ -15,7 +15,7 @@
     "sqlite3": "^3.1.8"
   },
   "engines": {
-    "node": "7.2.0",
-    "npm": "3.10.9"
+    "node": "7.4.0",
+    "npm": "3.10.10"
   }
 }
