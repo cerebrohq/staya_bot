@@ -83,7 +83,7 @@ function sendWorkToUsers(bot, allusers, ago_minutes)
     var requestVacancies = function (address, users, from_ago_minutes) {
             
             var param = (from_ago_minutes)?'?from_ago_minutes=' + from_ago_minutes:'';
-            var url =  address + '/api/jobs_for_bot/10/' + param;
+            var url =  address + '/api/jobs_for_bot/10000/' + param; // 10
             
             trace.log('request url', url);  
 
@@ -93,59 +93,62 @@ function sendWorkToUsers(bot, allusers, ago_minutes)
             }
             , function (error, response, body) {
                 //trace.log('response url', response.statusCode); 
-                if (!error) { // && response.statusCode === 200
-                    var vacancy = body.list;     
-                    var tagurlbegin = '';   
-                    var tagurlend = '';     
-                    
-                    for (var u = 0; u < users.length; u++) {                        
-                        var areaUser = users[u];                        
-                        //console.log('response to user', areaUser); 
-                        //console.log('response url', url); 
-                        //console.log('vacancy', vacancy.length); 
-                        for (var i = 0; i < vacancy.length; i++) { 
+                if (!error) { // && response.statusCode === 200                   
+                    if (body.count > 0)
+                    {
+                        var vacancy = body.list;
+                        var tagurlbegin = '';   
+                        var tagurlend = '';     
+                        
+                        for (var u = 0; u < users.length; u++) {                        
+                            var areaUser = users[u];                        
+                            //console.log('response to user', areaUser); 
+                            //console.log('response url', url); 
+                            //console.log('vacancy', vacancy.length); 
+                            for (var i = 0; i < vacancy.length; i++) { 
 
-                            if (hasProf(areaUser.profs, vacancy[i].prof_areas)) {
-                                
-                                if (from_ago_minutes && i > 15) {
-                                    trace.log('more 15 vacancies to break');
-                                    break;
-                                }                               
+                                if (hasProf(areaUser.profs, vacancy[i].prof_areas)) {
+                                    
+                                    if (from_ago_minutes && i > 15) {
+                                        trace.log('more 15 vacancies to break');
+                                        break;
+                                    }                               
 
-                                var strheader = '';
-                                var topic = htmlToText.fromString(vacancy[i].topic, {wordwrap: 130});
-                                if (areaUser.address.channelId == 'slack') {
-                                    strheader = '**' + topic + '**\n\n';
-                                } else {
-                                    strheader = '###' + topic + '\n\n';
+                                    var strheader = '';
+                                    var topic = htmlToText.fromString(vacancy[i].topic, {wordwrap: 130});
+                                    if (areaUser.address.channelId == 'slack') {
+                                        strheader = '**' + topic + '**\n\n';
+                                    } else {
+                                        strheader = '###' + topic + '\n\n';
+                                    }
+                                    var description = htmlToText.fromString(vacancy[i].description_short, {wordwrap: 130});                
+                                    var strtext = description;
+                                    var domen = '';
+                                    if (vacancy[i].url.startsWith('/'))
+                                        domen = (areaUser.area) ? areaUser.area : 'http://jobs.staya.vc';
+                                    
+                                    var strurl = '\n\n' + tagurlbegin + domen + vacancy[i].url + '?utm_source=bot&utm_campaign=bot&utm_medium=' + areaUser.address.channelId + tagurlend; 
+                                    
+                                    // for fucking facebook messager
+                                    var sizeadd = strheader.length + strurl.length + 3; // 3 for ### endind header in facebook
+                                    if (strtext.length > (299 - sizeadd)) {
+                                        strtext = strtext.substring(0, (296 - sizeadd)) + '...';                    
+                                    }
+
+                                    var str = strheader + strtext + strurl;
+                                    var msg = new builder.Message()
+                                                .address(areaUser.address)
+                                                .text(str); 
+
+                                    if (areaUser.address.channelId == 'slack') {
+                                        msg.channelData = ({parse: "full", unfurl_links:"true", unfurl_media:"true"});
+                                    }             
+
+                                    bot.send(msg); 
                                 }
-                                var description = htmlToText.fromString(vacancy[i].description_short, {wordwrap: 130});                
-                                var strtext = description;
-                                var domen = '';
-                                if (vacancy[i].url.startsWith('/'))
-                                     domen = (areaUser.area) ? areaUser.area : 'http://jobs.staya.vc';
-                                
-                                var strurl = '\n\n' + tagurlbegin + domen + vacancy[i].url + '?utm_source=bot&utm_campaign=bot&utm_medium=' + areaUser.address.channelId + tagurlend; 
-                                
-                                // for fucking facebook messager
-                                var sizeadd = strheader.length + strurl.length + 3; // 3 for ### endind header in facebook
-                                if (strtext.length > (299 - sizeadd)) {
-                                    strtext = strtext.substring(0, (296 - sizeadd)) + '...';                    
-                                }
-
-                                var str = strheader + strtext + strurl;
-                                var msg = new builder.Message()
-                                            .address(areaUser.address)
-                                            .text(str); 
-
-                                if (areaUser.address.channelId == 'slack') {
-                                    msg.channelData = ({parse: "full", unfurl_links:"true", unfurl_media:"true"});
-                                }             
-
-                                bot.send(msg); 
                             }
-                        }
-                    }    
+                        } 
+                    }   
                                     
                     trace.log('sendWorkToUsers end', new Date());             
                 }
