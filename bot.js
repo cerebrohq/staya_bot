@@ -318,7 +318,7 @@ bot.dialog('/testSend',  [
 setInterval(function() {
                 users = data.users(); 
                 query.sendWork(bot, users);             
-        }, 600000);  // 
+        }, 900000);  // 
 
 
 

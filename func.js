@@ -83,7 +83,7 @@ function sendWorkToUsers(bot, allusers, ago_minutes)
     var requestVacancies = function (address, users, from_ago_minutes) {
             
             var param = (from_ago_minutes)?'?from_ago_minutes=' + from_ago_minutes:'';
-            var url =  address + '/api/jobs_for_bot/10000/' + param; // 10
+            var url =  address + '/api/jobs_for_bot/15/' + param; // 10
             
             trace.log('request url', url);  
 
