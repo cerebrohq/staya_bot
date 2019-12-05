@@ -302,14 +302,16 @@ bot.dialog('/adcount',  [
 ]);
 
 bot.dialog('/testSend',  [
-    function (session) {  
-        console.log('testSend 1');  
-        builder.Prompts.text(session, 'input id');              
+    function (session) {       
+        
+        session.endDialog(messages.goоdMessage); 
+        data.setDoNotSend(session.message, false);                
+        users = data.users(); 
+        query.sendWork(bot, users, 4320);                        
+                
     },
-    function (session, results) { 
-        console.log('testSend 2');         
-        session.endDialog();   
-        query.testSendWork(results.response, bot, data.user(session.message));
+    function (session, results) {        
+           
     }
 ]);
 

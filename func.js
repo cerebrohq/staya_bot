@@ -72,7 +72,7 @@ function sendWorkToUsers(bot, allusers, ago_minutes)
             var address = (user.area) ? user.area : 'http://jobs.staya.vc';                        
             if (!areas[address]) {            
                 areas[address] = {};
-                areas[address].users = Array();                
+                areas[address].users = [];                
             }  
             areas[address].users[areas[address].users.length] = user;                
         }   
