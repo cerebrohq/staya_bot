@@ -235,16 +235,16 @@ function testSendWork(type, bot, user)
                                         strtext = strtext.substring(0, (296 - sizeadd)) + '...';                    
                                     }
 
-                                    //var address = areaUser.address;
+                                    var address = areaUser.address;
                                     //delete address.conversation;
-                                    var address =
+                                    /*var address =
                                     {
                                         channelId: areaUser.address.channelId,
                                         user: areaUser.address.user,                                        
                                         bot: areaUser.address.bot,
                                         serviceUrl: areaUser.address.serviceUrl,
                                         useAuth: true
-                                    }
+                                    }*/
                                     var str = strheader + strtext + strurl;
                                     var msg = new builder.Message()
                                                 .address(address)
