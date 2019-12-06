@@ -309,9 +309,9 @@ bot.dialog('/testSend',  [
         
         session.endDialog(messages.goоdMessage); 
         data.setDoNotSend(session.message, false);                
-        //users = data.users(); 
-        var users = {};
-        users[data.userId(session.message)] = data.user(session.message);                         
+        users = data.users(); 
+        //var users = {};
+        //users[data.userId(session.message)] = data.user(session.message);                         
         query.testSendWork(bot, users, 4320);                        
                 
     },
