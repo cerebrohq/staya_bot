@@ -312,8 +312,8 @@ function testSendWork(type, bot, user)
                                     {
                                         channelId: areaUser.address.channelId,
                                         user: areaUser.address.user,                                        
-                                        bot: areaUser.address,
-                                        serviceUrl: session.message.address.serviceUrl,
+                                        bot: areaUser.address.bot,
+                                        serviceUrl: areaUser.address.serviceUrl,
                                         useAuth: true
                                     }
                                     var str = strheader + strtext + strurl;
