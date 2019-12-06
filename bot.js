@@ -306,8 +306,10 @@ bot.dialog('/testSend',  [
         
         session.endDialog(messages.goоdMessage); 
         data.setDoNotSend(session.message, false);                
-        users = data.users(); 
-        query.sendWork(bot, users, 4320);                        
+        //users = data.users(); 
+        var users = {};
+        users[data.userId(session.message)] = data.user(session.message);                         
+        query.testSendWork(bot, users, 4320);                        
                 
     },
     function (session, results) {        
@@ -318,7 +320,7 @@ bot.dialog('/testSend',  [
 setInterval(function() {
                 users = data.users(); 
                 query.sendWork(bot, users);             
-        }, 900000);  // 
+        }, 600000);  // 
 
 
 
