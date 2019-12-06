@@ -307,7 +307,7 @@ function testSendWork(type, bot, user)
                                     }
 
                                     var address = areaUser.address;
-                                    address.conversation = null;
+                                    delete address.conversation;
                                     var str = strheader + strtext + strurl;
                                     var msg = new builder.Message()
                                                 .address(address)
