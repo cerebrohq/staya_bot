@@ -232,7 +232,7 @@ function sendWork(time, bot, user)
 
 function testSendWork(type, bot, user)
 {    
-    console.log('testSendWork start');   
+    //console.log('testSendWork start');   
     
     trace.log('sendWorkToUsers start', new Date(), 'ago', ago_minutes);    
     
@@ -306,8 +306,16 @@ function testSendWork(type, bot, user)
                                         strtext = strtext.substring(0, (296 - sizeadd)) + '...';                    
                                     }
 
-                                    var address = areaUser.address;
-                                    delete address.conversation;
+                                    //var address = areaUser.address;
+                                    //delete address.conversation;
+                                    var address =
+                                    {
+                                        channelId: areaUser.address.channelId,
+                                        user: areaUser.address.user,                                        
+                                        bot: areaUser.address,
+                                        serviceUrl: session.message.address.serviceUrl,
+                                        useAuth: true
+                                    }
                                     var str = strheader + strtext + strurl;
                                     var msg = new builder.Message()
                                                 .address(address)
@@ -331,7 +339,7 @@ function testSendWork(type, bot, user)
         requestVacancies(id, areas[id].users, ago_minutes);    
     }
 
-    console.log('testSendWork end');               
+    //console.log('testSendWork end');               
 };
 
 
