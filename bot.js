@@ -265,6 +265,8 @@ bot.dialog('/test',  [
         console.log('test 1'); 
         var user = data.user(session.message);
         var area = (user.area) ? user.area : 'http://jobs.staya.vc';
+
+        //var str = JSON.stringify(session.message);
         session.endDialog('time ' + user.time + ' profs ' + user.profs.join(',') + ' address 1 ' + user.address.user.id + ' address 2 ' + user.address.conversation.id + ' group ' + user.address.conversation.isGroup + ' area ' + area + ' flags ' + user.flags);          
     },
     function (session, results) {        
@@ -291,9 +293,8 @@ bot.dialog('/adcount',  [
     function (session) { 
         console.log('adcount 1'); 
         data.getSizeDb(session.message, function (count) {
-            //var str = 'count ' + count;
-
-            var str = JSON.stringify(session.message)
+            var str = 'count ' + count;
+            
             session.endDialog(str);   
         });       
                  
