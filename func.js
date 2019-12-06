@@ -135,9 +135,18 @@ function sendWorkToUsers(bot, allusers, ago_minutes)
                                         strtext = strtext.substring(0, (296 - sizeadd)) + '...';                    
                                     }
 
+                                    var address =
+                                    {
+                                        channelId: areaUser.address.channelId,
+                                        user: areaUser.address.user,                                        
+                                        bot: areaUser.address.bot,
+                                        serviceUrl: areaUser.address.serviceUrl,
+                                        useAuth: true
+                                    };
+
                                     var str = strheader + strtext + strurl;
                                     var msg = new builder.Message()
-                                                .address(areaUser.address)
+                                                .address(address) //areaUser.address
                                                 .text(str); 
 
                                     if (areaUser.address.channelId == 'slack') {
