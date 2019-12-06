@@ -10,8 +10,8 @@ var connector = new builder.ChatConnector({
     appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 
-
-var bot = new builder.UniversalBot(connector); 
+var inMemoryStorage = new builder.MemoryBotStorage();
+var bot = new builder.UniversalBot(connector).set('storage', inMemoryStorage); // Register in memory storage
 bot.dialog('/', dcommand);
 
 module.exports.connector = connector;
